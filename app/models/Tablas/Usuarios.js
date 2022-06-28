@@ -29,4 +29,8 @@ const Usuarios = sequelize.define('usuarios', {
 
 
 
+}, {
+    freezeTableName: true, //Esta linea va en todos los modelos que hagan para que respete el nombre
+    timestamps: false, //Esta linea va en todos los modelos para que no les cree los campo de Creacion y actualizacion 
+
 })
