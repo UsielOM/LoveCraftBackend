@@ -20,3 +20,6 @@ const Area = sequelize.define('roll', {
     timestamps: false, //Esta linea va en todos los modelos para que no les cree los campo de Creacion y actualizacion 
 
 })
+
+
+module.exports = Area;
