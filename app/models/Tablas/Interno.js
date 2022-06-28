@@ -29,6 +29,23 @@ const Interno = sequelize.define('interno', {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
     },
+    idEstatus: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false
+    },
+    idUsuarios: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false
+    },
+    idArea: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false
+    },
+    idRoll: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false
+    }
+
 
 
 
