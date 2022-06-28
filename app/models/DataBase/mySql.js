@@ -2,6 +2,7 @@ const sequelize = require('./configDb');
 const tabllaEjemplo = require('../Tablas/ejmploTabla'); //De esta manera llamamos al modelo creado
 const createTable = require('../Functions/createTables'); //Este es el metodo que nos permite creear tablas desde el backend
 const Interno = require('../Tablas/Interno');
+const Roll = require('../Tablas/Roll');
 const foreigKey = require('./relaciones');
 
 init = function() {
@@ -21,5 +22,13 @@ getInternos = function(callback) {
     Interno.findAll().then(registros => callback(registros));
 }
 
+postRoll = function(request, callback) {
+    Roll.create({
+        idRoll: request.idRoll,
+        Descripcion: request.Descripcion
+    }).then(callback(true));
+};
+
 module.exports.init = init;
 module.exports.getInternos = getInternos;
+module.exports.postRoll = postRoll;
