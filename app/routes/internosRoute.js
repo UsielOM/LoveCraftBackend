@@ -1,5 +1,10 @@
 const Interno = require('../models/Tablas/Interno');
 module.exports = function(app, mysql) {
+    app.get('/get/internos', (require, response) => {
+        mysql.getInternos(function(result) {
+            response.send(result)
+        })
+    })
 
     app.post('/post/internos', (require, response) => {
         mysql.postInternos(require.body, function(result) {
@@ -7,11 +12,7 @@ module.exports = function(app, mysql) {
         })
     });
 
-    app.get('/get/internos', (require, response) => {
-        mysql.getInternos(function(result) {
-            response.send(result)
-        })
-    })
+
 
 
     app.put('/put/interno/:idInterno', (req, res) => {
