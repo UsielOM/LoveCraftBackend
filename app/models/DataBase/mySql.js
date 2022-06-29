@@ -27,6 +27,7 @@ getRoll = function(options, callback) {
 postRoll = function(request, callback) {
     Roll.create({
         Descripcion: request.Descripcion
+
     }).then(callback(true));
 };
 
