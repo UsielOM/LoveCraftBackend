@@ -23,20 +23,19 @@ getInternos = function(callback) {
     Interno.findAll().then(registros => callback(registros));
 }
 
-postRoll = function(request, callback) {
-    Roll.create({
-        idRoll: request.idRoll,
-        Descripcion: request.Descripcion
-    }).then(callback(true));
-};
 
 
 postArea = function(request, callback) {
     Area.create({
-        idArea: request.idArea,
         Nombre: request.Nombre
-    })
-}
+    }).then(callback(true));
+};
+
+postRoll = function(request, callback) {
+    Roll.create({
+        Descripcion: request.Descripcion
+    }).then(callback(true));
+};
 
 
 

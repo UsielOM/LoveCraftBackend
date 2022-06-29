@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize'); //Esta linea va en todos los modelos
 const sequelize = require('../DataBase/configDb'); //Esta linea va en todos los modelos que hagan
 
 
-const Area = sequelize.define('roll', {
+const Area = sequelize.define('area', {
     idArea: {
         type: Sequelize.DataTypes.INTEGER,
         primaryKey: true,
