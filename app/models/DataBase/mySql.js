@@ -6,23 +6,36 @@ const Roll = require('../Tablas/Roll');
 const Area = require('../Tablas/Area');
 const Usuarios = require('../Tablas/Usuarios');
 const foreigKey = require('./relaciones');
+const Estatus = require('../Tablas/Estatus');
 
 init = function() {
     sequelize.authenticate().then(() => {
         console.log("Conexion establecida exitosamente con mysql.");
-        foreigKey();
+
     }).catch(err => {
         console.error("Conexion no estableccida:", err);
     });
-
+    foreigKey();
+    // createTable(Interno);
     // createTable(tabllaEjemplo) //Si se requiere usar se invoca la variable createTable y dentro de su parentecis el modelo que necesitemos crear 
 
 }
 
+//Metodos Get
+
 
 getInternos = function(callback) {
-    Interno.findAll().then(registros => callback(registros));
-}
+    Interno.findAll({
+        include: [
+            { model: Estatus, attributes: ['estatus'] },
+            { model: Usuarios, attributes: ['Nombre'] },
+            { model: Area, attributes: ['Nombre'] },
+            { model: Roll, attributes: ['Descripcion'] }
+
+        ],
+        attributes: ['idInterno'],
+    }).then(interno => callback(interno));
+};
 
 //Metodos Post
 
@@ -64,8 +77,8 @@ postInternos = function(request, callback) {
 
 
 module.exports.init = init;
-module.exports.getInternos = getInternos;
 module.exports.postRoll = postRoll;
 module.exports.postArea = postArea;
 module.exports.postUsuarios = postUsuarios;
 module.exports.postInternos = postInternos;
+module.exports.getInternos = getInternos;
