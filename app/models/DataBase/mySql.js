@@ -13,4 +13,24 @@ init = function() {
 
 }
 
+
 module.exports.init = init;
+
+const Roll = require('../Tablas/Roll');
+
+
+//get de roll
+getRoll = function(options, callback) {
+    Roll.findOne({ where: { idRoll: options.idRoll } }).then(roll => callback(roll));
+}
+//Post Roll
+postRoll = function(request, callback) {
+    Roll.create({
+        Descripcion: request.Descripcion
+    }).then(callback(true));
+};
+
+
+
+module.exports.getRoll = getRoll;
+module.exports.postRoll = postRoll;
