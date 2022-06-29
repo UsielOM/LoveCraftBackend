@@ -24,4 +24,13 @@ module.exports = function(app, mysql) {
     });
 
 
+    app.delete('/delete/roll/:idRoll', (req, res) => {
+        Roll.destroy({
+            where: { idRoll: req.params.idRoll }
+        }).then(result => {
+            res.json(result);
+        });
+    })
+
+
 }
