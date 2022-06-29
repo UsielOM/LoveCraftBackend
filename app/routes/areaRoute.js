@@ -12,7 +12,23 @@ module.exports = function(app, mysql) {
         }).then(result => {
             res.json(result);
         });
+    });
+
+    app.get('/get/areas', (req, res) => {
+        mysql.getArea(function(result) {
+            res.send(result);
+        })
     })
+
+    app.put('/put/area/:idArea', (req, res) => {
+        Area.update({
+            Nombre: req.body.Nombre
+        }, {
+            where: { idArea: req.params.idArea }
+        }).then(result => {
+            res.send(result);
+        });
+    });
 
 
 }

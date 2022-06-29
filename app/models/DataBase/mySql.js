@@ -38,8 +38,10 @@ getInternos = function(callback) {
         attributes: ['idInterno'],
     }).then(interno => callback(interno));
 };
-
-//Metodos Post
+getArea = function(callback) {
+        Area.findAll().then(area => callback(area));
+    }
+    //Metodos Post
 
 postArea = function(request, callback) {
     Area.create({
@@ -84,5 +86,5 @@ module.exports.postArea = postArea;
 module.exports.postUsuarios = postUsuarios;
 module.exports.postInternos = postInternos;
 module.exports.getInternos = getInternos;
-
+module.exports.getArea = getArea;
 module.exports.getRoll = getRoll;
