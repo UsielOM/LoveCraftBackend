@@ -77,19 +77,6 @@ postInternos = function(request, callback) {
     }
     //Metodos PUT
 
-putRoll = function(request, callback) {
-        Roll.findOne({ where: { idRoll: request.idRoll } }).then((roll) => {
-            roll.update({
-                Descripcion: request.Descripcion
-            });
-            callback(roll);
-        })
-    }
-    //Metodo delete
-
-deleteArea = function(request, callback) {
-    Interno.destroy({ where: { idArea: request.idArea } }.then(result => callback(result)));
-}
 
 module.exports.init = init;
 module.exports.postRoll = postRoll;
@@ -97,6 +84,5 @@ module.exports.postArea = postArea;
 module.exports.postUsuarios = postUsuarios;
 module.exports.postInternos = postInternos;
 module.exports.getInternos = getInternos;
-module.exports.putRoll = putRoll;
+
 module.exports.getRoll = getRoll;
-module.exports.deleteArea = deleteArea;
