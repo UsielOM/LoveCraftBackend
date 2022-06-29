@@ -47,10 +47,25 @@ postUsuarios = function(request, callback) {
 
 };
 
+postInternos = function(request, callback) {
+    Interno.create({
+        Direccion: request.Direccion,
+        Foto: request.Foto,
+        Contraseña: request.Contraseña,
+        Fech_ingre: request.Fech_ingre,
+        Edad: request.Edad,
+        idEstatus: request.idEstatus,
+        idUsuarios: request.idUsuarios,
+        idArea: request.idArea,
+        idRoll: request.idRoll
+    }).then(callback(true));
+}
+
 
 
 module.exports.init = init;
 module.exports.getInternos = getInternos;
 module.exports.postRoll = postRoll;
 module.exports.postArea = postArea;
-module.exports.postUsuarios = postUsuarios
+module.exports.postUsuarios = postUsuarios;
+module.exports.postInternos = postInternos;
