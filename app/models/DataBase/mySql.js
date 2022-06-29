@@ -22,7 +22,9 @@ init = function() {
 }
 
 //Metodos Get
-
+getRoll = function(options, callback) {
+    Roll.findOne({ where: { idRoll: options.idRoll } }).then(roll => callback(roll));
+}
 
 getInternos = function(callback) {
     Interno.findAll({
@@ -61,19 +63,28 @@ postUsuarios = function(request, callback) {
 };
 
 postInternos = function(request, callback) {
-    Interno.create({
-        Direccion: request.Direccion,
-        Foto: request.Foto,
-        Contraseña: request.Contraseña,
-        Fech_ingre: request.Fech_ingre,
-        Edad: request.Edad,
-        idEstatus: request.idEstatus,
-        idUsuarios: request.idUsuarios,
-        idArea: request.idArea,
-        idRoll: request.idRoll
-    }).then(callback(true));
-}
+        Interno.create({
+            Direccion: request.Direccion,
+            Foto: request.Foto,
+            Contraseña: request.Contraseña,
+            Fech_ingre: request.Fech_ingre,
+            Edad: request.Edad,
+            idEstatus: request.idEstatus,
+            idUsuarios: request.idUsuarios,
+            idArea: request.idArea,
+            idRoll: request.idRoll
+        }).then(callback(true));
+    }
+    //Metodos PUT
 
+putRoll = function(request, callback) {
+    Roll.findOne({ where: { idRoll: request.idRoll } }).then((roll) => {
+        roll.update({
+            Descripcion: request.Descripcion
+        });
+        callback(roll);
+    })
+}
 
 
 module.exports.init = init;
@@ -82,3 +93,5 @@ module.exports.postArea = postArea;
 module.exports.postUsuarios = postUsuarios;
 module.exports.postInternos = postInternos;
 module.exports.getInternos = getInternos;
+module.exports.putRoll = putRoll;
+module.exports.getRoll = getRoll;
