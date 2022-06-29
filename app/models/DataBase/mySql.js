@@ -4,6 +4,7 @@ const createTable = require('../Functions/createTables'); //Este es el metodo qu
 const Interno = require('../Tablas/Interno');
 const Roll = require('../Tablas/Roll');
 const Area = require('../Tablas/Area');
+const Usuarios = require('../Tablas/Usuarios');
 const foreigKey = require('./relaciones');
 
 init = function() {
@@ -23,7 +24,7 @@ getInternos = function(callback) {
     Interno.findAll().then(registros => callback(registros));
 }
 
-
+//Metodos Post
 
 postArea = function(request, callback) {
     Area.create({
@@ -36,6 +37,15 @@ postRoll = function(request, callback) {
         Descripcion: request.Descripcion
     }).then(callback(true));
 };
+postUsuarios = function(request, callback) {
+    Usuarios.create({
+        Nombre: request.Nombre,
+        Apellido: request.Apellido,
+        Telefono: request.Telefono,
+        Correo: request.Correo
+    }).then(callback(true));
+
+};
 
 
 
@@ -43,3 +53,4 @@ module.exports.init = init;
 module.exports.getInternos = getInternos;
 module.exports.postRoll = postRoll;
 module.exports.postArea = postArea;
+module.exports.postUsuarios = postUsuarios
