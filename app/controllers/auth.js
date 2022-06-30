@@ -1,6 +1,7 @@
 const { response } = require ('express');
 const {validationResult} = require('express-validator');
 const sequelize = require('../models/DataBase/configDb');
+const bcrypt = require('bcryptjs')
 
 
 const loginUsuario  = async (req, res)=>{
@@ -21,11 +22,18 @@ const loginUsuario  = async (req, res)=>{
                 })
             }
         //validar contraseña
+        const  validPassword = bcrypt.compareSync(password, dbUser[0].Contraseña);
+        if(!validPassword ){
+            return res.status(400).json({
+                ok:false,
+                msg:'El password no es valido'
+            });
+        }
 
         return  res.json({
             ok: true,
             msg:'ruta login',
-            datos: dbUser
+            datos: dbUser,
          });
     }catch(error)
     {
