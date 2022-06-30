@@ -2,6 +2,7 @@ const { response } = require ('express');
 const {validationResult} = require('express-validator');
 const sequelize = require('../models/DataBase/configDb');
 const bcrypt = require('bcryptjs')
+const {generarJWT} = require('../helpers/jwt');
 
 
 const loginUsuario  = async (req, res)=>{
@@ -9,7 +10,7 @@ const loginUsuario  = async (req, res)=>{
     try{
         //validar usuario
         const dbUser = await sequelize.query(
-            "Select b.Correo, a.Contraseña, c.estatus from interno a inner join usuarios b on a.idUsuarios  = b.idUsuarios inner join estatus c on a.idEstatus = c.idEstatus where b.Correo = '"+email+"'; ",
+            "Select b.Correo, a.Contraseña, c.estatus, b.Nombre from interno a inner join usuarios b on a.idUsuarios  = b.idUsuarios inner join estatus c on a.idEstatus = c.idEstatus where b.Correo = '"+email+"'; ",
             {
                 type: sequelize.QueryTypes.SELECT
             });
@@ -30,10 +31,15 @@ const loginUsuario  = async (req, res)=>{
             });
         }
 
+        //crear JWT
+        const token = await generarJWT(dbUser.Nombre,email);
+
+
         return  res.json({
             ok: true,
             msg:'ruta login',
             datos: dbUser,
+            token
          });
     }catch(error)
     {
