@@ -10,7 +10,6 @@ init = function() {
     });
 
     // createTable(tabllaEjemplo) //Si se requiere usar se invoca la variable createTable y dentro de su parentecis el modelo que necesitemos crear 
-
 }
 
 module.exports.init = init;
