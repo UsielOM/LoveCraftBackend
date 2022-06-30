@@ -60,7 +60,26 @@ const cambiarPassword = async(req, res= response)=> {
     })
 }
 
+const revalidarToken = async (req, res=response) => {
+
+    const {name, email} = req;
+    //Gwenerar token
+    const token = await generarJWT(name, email);
+
+
+    return res.json({
+        ok: true,
+        msg : 'Renew',
+        name,
+        email,
+        token
+    })
+
+}
+
+
 module.exports = {
     loginUsuario,
-    cambiarPassword
+    cambiarPassword,    
+    revalidarToken
 }
