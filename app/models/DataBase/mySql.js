@@ -2,6 +2,7 @@ const sequelize = require('./configDb');
 const tabllaEjemplo = require('../Tablas/ejmploTabla'); //De esta manera llamamos al modelo creado
 const createTable = require('../Functions/createTables'); //Este es el metodo que nos permite creear tablas desde el backend
 const Interno = require('../Tablas/Interno');
+const Area = require('../Tablas/Area');
 
 init = function() {
     sequelize.authenticate().then(() => {
@@ -43,6 +44,22 @@ postInternos = function(request, callback) {
         idRoll: request.idRoll
     }).then(callback(true));
 }
+
+
+getArea = function(callback) {
+        Area.findAll().then(area => callback(area));
+    }
+    //Metodos Post
+
+postArea = function(request, callback) {
+    Area.create({
+        Nombre: request.Nombre
+    }).then(callback(true));
+};
+
+
+module.exports.getArea = getArea;
+module.exports.postArea = postArea;
 
 module.exports.postInternos = postInternos;
 module.exports.getInternos = getInternos;
