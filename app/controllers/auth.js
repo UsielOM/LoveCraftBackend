@@ -1,8 +1,11 @@
 const { response } = require ('express');
 const {validationResult} = require('express-validator');
 const sequelize = require('../models/DataBase/configDb');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const Interno = require('../models/Tablas/Interno');
+const mysql = require('../models/DataBase/mySql')
 const {generarJWT} = require('../helpers/jwt');
+
 
 
 const loginUsuario  = async (req, res)=>{
@@ -53,11 +56,62 @@ const loginUsuario  = async (req, res)=>{
 
 const cambiarPassword = async(req, res= response)=> {
     const {email,password}= req.body;
+    let pw2;
 
-    res.status(201).json({
-        ok:true,
-        msg:'ruta cambiar password'
-    })
+    try {
+    //validar usuario
+        const dbUser = await sequelize.query(
+        "Select b.Correo, a.Contraseña, c.estatus, b.Nombre, a.idInterno  from interno a inner join usuarios b on a.idUsuarios  = b.idUsuarios inner join estatus c on a.idEstatus = c.idEstatus where b.Correo = '"+email+"'; ",
+        {
+            type: sequelize.QueryTypes.SELECT
+        });
+        if(dbUser >= 0){
+            return res.status(400).json({
+                ok:false,
+                msg:'El correo no existe',
+                user: dbUser
+            })
+        }
+        //hashear la contraseña
+        const salt = bcrypt.genSaltSync();
+        pw2 = bcrypt.hashSync(password,salt);
+
+        //crear JWT
+        const token = await generarJWT(dbUser[0].Nombre,email);
+
+        console.log(pw2,dbUser[0].idInterno)
+
+        //Generar el update a la tabla
+        //pendiente
+        Interno.update({
+            Contraseña : pw2
+        },{
+            where:{
+                idInterno : dbUser[0].idInterno
+            }
+        }).then(result=>{
+            console.log(result)
+        })
+        
+
+        return res.status(201).json({
+            ok: true,
+            msg: 'Se cambio la contraseña',
+            pw: pw2,
+            email,
+            dbUser,
+            token,
+        });
+    
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            ok: false,
+            msg: 'Por favor hable con el administrador'
+        });
+    }
+
+   
 }
 
 const revalidarToken = async (req, res=response) => {
