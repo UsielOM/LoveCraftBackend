@@ -1,9 +1,7 @@
 const { response } = require ('express');
-const {validationResult} = require('express-validator');
 const sequelize = require('../models/DataBase/configDb');
 const bcrypt = require('bcryptjs');
 const Interno = require('../models/Tablas/Interno');
-const mysql = require('../models/DataBase/mySql')
 const {generarJWT} = require('../helpers/jwt');
 
 

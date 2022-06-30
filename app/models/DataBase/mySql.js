@@ -1,6 +1,4 @@
 const sequelize = require('./configDb');
-const tabllaEjemplo = require('../Tablas/ejmploTabla'); //De esta manera llamamos al modelo creado
-const createTable = require('../Functions/createTables'); //Este es el metodo que nos permite creear tablas desde el backend
 
 
 init = function() {
