@@ -24,7 +24,20 @@ init = function() {
 //Metodos Get
 getRoll = function(options, callback) {
     Roll.findOne({ where: { idRoll: options.idRoll } }).then(roll => callback(roll));
-}
+};
+
+getMaximoUsers = function(callback) {
+
+    Usuarios.findAll({
+        attributes: [
+            [sequelize.fn('MAX', sequelize.col('idUsuarios')), 'idUsuarios']
+        ],
+        raw: true
+    }).then(result => callback(result));
+
+
+};
+
 
 getInternos = function(callback) {
     Interno.findAll({
@@ -65,6 +78,28 @@ postUsuarios = function(request, callback) {
 };
 
 postInternos = function(request, callback) {
+    Interno.create({
+        Direccion: request.Direccion,
+        Foto: request.Foto,
+        Contraseña: request.Contraseña,
+        Fech_ingre: request.Fech_ingre,
+        Edad: request.Edad,
+        idEstatus: request.idEstatus,
+        idUsuarios: request.idUsuarios,
+        idArea: request.idArea,
+        idRoll: request.idRoll
+    }).then(callback(true));
+}
+
+
+postEmpleado = function(request, callback) {
+
+        Usuarios.create({
+            Nombre: request.Nombre,
+            Apellido: request.Apellido,
+            Telefono: request.Telefono,
+            Correo: request.Correo
+        })
         Interno.create({
             Direccion: request.Direccion,
             Foto: request.Foto,
@@ -88,3 +123,4 @@ module.exports.postInternos = postInternos;
 module.exports.getInternos = getInternos;
 module.exports.getArea = getArea;
 module.exports.getRoll = getRoll;
+module.exports.getMaximoUsers = getMaximoUsers;
