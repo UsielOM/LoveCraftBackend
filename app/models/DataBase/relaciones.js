@@ -6,6 +6,7 @@ const Usuarios = require('../Tablas/Usuarios.js');
 module.exports = function() {
     Estatus.hasMany(Interno, { foreignKey: 'idEstatus' });
     Interno.belongsTo(Estatus, { foreignKey: 'idEstatus' });
+    
     Usuarios.hasMany(Interno, { foreignKey: 'idUsuarios' });
     Interno.belongsTo(Usuarios, { foreignKey: 'idUsuarios' });
 
