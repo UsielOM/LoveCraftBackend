@@ -77,10 +77,7 @@ const cambiarPassword = async(req, res= response)=> {
         //crear JWT
         const token = await generarJWT(dbUser[0].Nombre,email);
 
-        console.log(pw2,dbUser[0].idInterno)
-
         //Generar el update a la tabla
-        //pendiente
         Interno.update({
             Contraseña : pw2
         },{
@@ -91,12 +88,9 @@ const cambiarPassword = async(req, res= response)=> {
             console.log(result)
         })
         
-
         return res.status(201).json({
             ok: true,
             msg: 'Se cambio la contraseña',
-            pw: pw2,
-            email,
             dbUser,
             token,
         });
@@ -108,8 +102,6 @@ const cambiarPassword = async(req, res= response)=> {
             msg: 'Por favor hable con el administrador'
         });
     }
-
-   
 }
 
 const revalidarToken = async (req, res=response) => {
