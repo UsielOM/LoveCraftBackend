@@ -31,15 +31,14 @@ const loginUsuario  = async (req, res)=>{
                 msg:'El password no es valido'
             });
         }
-
         //crear JWT
-        const token = await generarJWT(dbUser.Nombre,email);
-
+        const token = await generarJWT(dbUser[0].Nombre,email);
 
         return  res.json({
             ok: true,
             msg:'ruta login',
-            datos: dbUser,
+            email: dbUser[0].Correo,
+            name: dbUser[0].Nombre,
             token
          });
     }catch(error)
@@ -105,12 +104,9 @@ const cambiarPassword = async(req, res= response)=> {
 }
 
 const revalidarToken = async (req, res=response) => {
-
     const {name, email} = req;
     //Gwenerar token
     const token = await generarJWT(name, email);
-
-
     return res.json({
         ok: true,
         msg : 'Renew',
