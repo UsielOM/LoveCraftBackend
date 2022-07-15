@@ -1,4 +1,5 @@
 const sequelize = require('./configDb');
+
 const tabllaEjemplo = require('../Tablas/ejmploTabla'); //De esta manera llamamos al modelo creado
 const createTable = require('../Functions/createTables'); //Este es el metodo que nos permite creear tablas desde el backend
 const Interno = require('../Tablas/Interno');
@@ -18,8 +19,11 @@ init = function() {
     foreigKey();
     // createTable(Interno);
     // createTable(tabllaEjemplo) //Si se requiere usar se invoca la variable createTable y dentro de su parentecis el modelo que necesitemos crear 
-
 }
+
+
+
+
 
 //Metodos Get
 getRoll = function(options, callback) {
@@ -124,3 +128,4 @@ module.exports.getInternos = getInternos;
 module.exports.getArea = getArea;
 module.exports.getRoll = getRoll;
 module.exports.getMaximoUsers = getMaximoUsers;
+
