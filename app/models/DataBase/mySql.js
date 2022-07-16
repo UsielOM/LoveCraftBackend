@@ -121,7 +121,8 @@ postEmpleado = function(request, callback) {
             idEstatus: request.idEstatus,
             idUsuarios: request.idUsuarios,
             idArea: request.idArea,
-            idRoll: request.idRoll
+            idRoll: request.idRoll,
+            idHorario: request.idHorario
         }).then(callback(true));
     }
     //Metodos PUT
