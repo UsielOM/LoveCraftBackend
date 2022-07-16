@@ -8,6 +8,7 @@ const Area = require('../Tablas/Area');
 const Usuarios = require('../Tablas/Usuarios');
 const foreigKey = require('./relaciones');
 const Estatus = require('../Tablas/Estatus');
+const Horario = require('../Tablas/Horario');
 
 init = function() {
     sequelize.authenticate().then(() => {
@@ -76,14 +77,14 @@ postUsuarios = function(request, callback) {
         Nombre: request.Nombre,
         Apellido: request.Apellido,
         Telefono: request.Telefono,
-        Correo: request.Correo
+        Correo: request.Correo,
+        Direccion: request.Direccion
     }).then(callback(true));
 
 };
 
 postInternos = function(request, callback) {
     Interno.create({
-        Direccion: request.Direccion,
         Foto: request.Foto,
         Contraseña: request.Contraseña,
         Fech_ingre: request.Fech_ingre,
@@ -91,10 +92,17 @@ postInternos = function(request, callback) {
         idEstatus: request.idEstatus,
         idUsuarios: request.idUsuarios,
         idArea: request.idArea,
-        idRoll: request.idRoll
+        idRoll: request.idRoll,
+        idHorario: request.idHorario
     }).then(callback(true));
 }
-
+postHorario = function(request, callback) {
+    Horario.create({
+        Fecha: request.Fecha,
+        Hora_inicial: request.Hora_inicial,
+        Hora_final: request.Hora_final
+    }).then(callback(true));
+}
 
 postEmpleado = function(request, callback) {
 
@@ -128,4 +136,4 @@ module.exports.getInternos = getInternos;
 module.exports.getArea = getArea;
 module.exports.getRoll = getRoll;
 module.exports.getMaximoUsers = getMaximoUsers;
-
+module.exports.postHorario = postHorario;

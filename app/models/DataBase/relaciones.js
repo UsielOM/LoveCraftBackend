@@ -3,10 +3,11 @@ const Estatus = require('../Tablas/Estatus');
 const Interno = require('../Tablas/Interno');
 const Roll = require('../Tablas/Roll.js');
 const Usuarios = require('../Tablas/Usuarios.js');
+const Horario = require('../Tablas/Horario');
 module.exports = function() {
     Estatus.hasMany(Interno, { foreignKey: 'idEstatus' });
     Interno.belongsTo(Estatus, { foreignKey: 'idEstatus' });
-    
+
     Usuarios.hasMany(Interno, { foreignKey: 'idUsuarios' });
     Interno.belongsTo(Usuarios, { foreignKey: 'idUsuarios' });
 
@@ -14,4 +15,7 @@ module.exports = function() {
     Interno.belongsTo(Area, { foreignKey: 'idArea' });
     Roll.hasMany(Interno, { foreignKey: 'idRoll' });
     Interno.belongsTo(Roll, { foreignKey: 'idRoll' });
+    Horario.hasMany(Interno, { foreignKey: 'idHorario' });
+    Interno.belongsTo(Horario, { foreignKey: 'idHorario' });
+
 }

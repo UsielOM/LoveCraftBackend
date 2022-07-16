@@ -11,10 +11,7 @@ const Interno = sequelize.define('interno', {
 
 
     },
-    Direccion: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false
-    },
+
     Foto: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
@@ -44,6 +41,10 @@ const Interno = sequelize.define('interno', {
         allowNull: false
     },
     idRoll: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false
+    },
+    idHorario: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
     }

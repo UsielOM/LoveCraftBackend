@@ -25,6 +25,10 @@ const Usuarios = sequelize.define('usuarios', {
     Correo: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
+    },
+    Direccion: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false
     }
 
 
