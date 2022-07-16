@@ -15,7 +15,10 @@ module.exports = function() {
     Interno.belongsTo(Area, { foreignKey: 'idArea' });
     Roll.hasMany(Interno, { foreignKey: 'idRoll' });
     Interno.belongsTo(Roll, { foreignKey: 'idRoll' });
-    Horario.hasMany(Interno, { foreignKey: 'idHorario' });
-    Interno.belongsTo(Horario, { foreignKey: 'idHorario' });
+
+    //TABLA HORARIO
+    Interno.hasMany(Horario, { foreignKey: 'idInterno' });
+    Horario.belongsTo(Interno, { foreignKey: 'idInterno' });
+
 
 }

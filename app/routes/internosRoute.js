@@ -1,14 +1,23 @@
 const Interno = require('../models/Tablas/Interno');
+const bcrypt = require('bcryptjs');
 module.exports = function(app, mysql) {
-    app.get('/get/internos', (require, response) => {
+    app.get('/get/internoss', (request, response) => {
         mysql.getInternos(function(result) {
             response.send(result)
         })
     })
 
-    app.post('/post/internos', (require, response) => {
-        mysql.postInternos(require.body, function(result) {
+    app.post('/post/interno', (request, response) => {
+        mysql.postEmpleado(request.body, function(result) {
             response.send(result);
+
+        })
+    });
+
+    app.post('/post/internos', (request, response) => {
+        mysql.postInternos(request.body, function(result) {
+            response.send(result);
+
         })
     });
 

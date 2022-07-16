@@ -10,6 +10,9 @@ const Horario = sequelize.define('horario', {
         primaryKey: true, //Si quieren que sea llave primaria o la identifique como una
         autoIncrement: true
     },
+    idInterno: {
+        type: Sequelize.DataTypes.INTEGER
+    },
     Fecha: {
         type: Sequelize.DataTypes.DATE
     },
