@@ -9,6 +9,7 @@ const Usuarios = require('../Tablas/Usuarios');
 const foreigKey = require('./relaciones');
 const Estatus = require('../Tablas/Estatus');
 const Horario = require('../Tablas/Horario');
+const bcrypt = require('bcryptjs');
 
 init = function() {
     sequelize.authenticate().then(() => {
@@ -84,9 +85,12 @@ postUsuarios = function(request, callback) {
 };
 
 postInternos = function(request, callback) {
+    const salt = bcrypt.genSaltSync();
+    pw2 = bcrypt.hashSync(request.Contraseña, salt);
+
     Interno.create({
         Foto: request.Foto,
-        Contraseña: request.Contraseña,
+        Contraseña: pw2,
         Fech_ingre: request.Fech_ingre,
         Edad: request.Edad,
         idEstatus: request.idEstatus,
@@ -105,24 +109,25 @@ postHorario = function(request, callback) {
 }
 
 postEmpleado = function(request, callback) {
-
+        const salt = bcrypt.genSaltSync();
+        pw2 = bcrypt.hashSync(request.Contraseña, salt);
         Usuarios.create({
             Nombre: request.Nombre,
             Apellido: request.Apellido,
             Telefono: request.Telefono,
-            Correo: request.Correo
+            Correo: request.Correo,
+            Direccion: request.Direccion
         })
         Interno.create({
-            Direccion: request.Direccion,
             Foto: request.Foto,
-            Contraseña: request.Contraseña,
+            Contraseña: pw2,
             Fech_ingre: request.Fech_ingre,
             Edad: request.Edad,
             idEstatus: request.idEstatus,
             idUsuarios: request.idUsuarios,
             idArea: request.idArea,
-            idRoll: request.idRoll,
-            idHorario: request.idHorario
+            idRoll: request.idRoll
+
         }).then(callback(true));
     }
     //Metodos PUT
@@ -138,3 +143,4 @@ module.exports.getArea = getArea;
 module.exports.getRoll = getRoll;
 module.exports.getMaximoUsers = getMaximoUsers;
 module.exports.postHorario = postHorario;
+module.exports.postEmpleado = postEmpleado
