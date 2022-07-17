@@ -32,6 +32,9 @@ getRoll = function(options, callback) {
     Roll.findOne({ where: { idRoll: options.idRoll } }).then(roll => callback(roll));
 };
 
+getRolls = function(callback) {
+    Roll.findOne().then(rolls => callback(rolls));
+}
 getMaximoUsers = function(callback) {
 
     Usuarios.findAll({
@@ -144,3 +147,4 @@ module.exports.getRoll = getRoll;
 module.exports.getMaximoUsers = getMaximoUsers;
 module.exports.postHorario = postHorario;
 module.exports.postEmpleado = postEmpleado
+module.exports.getRolls = getRolls
