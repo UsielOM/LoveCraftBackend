@@ -33,7 +33,7 @@ getRoll = function(options, callback) {
 };
 
 getRolls = function(callback) {
-    Roll.findOne().then(rolls => callback(rolls));
+    Roll.findAll().then(rolls => callback(rolls));
 }
 getMaximoUsers = function(callback) {
 
