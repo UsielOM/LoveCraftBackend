@@ -13,6 +13,12 @@ module.exports = function(app, mysql) {
         })
     })
 
+    app.get('/get/rolls', (req, res) => {
+        mysql.getRolls(function(result) {
+            res.send(result)
+        })
+    })
+
     app.put('/put/roll/:idRoll', (request, response) => {
 
         Roll.update({
