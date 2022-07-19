@@ -15,10 +15,16 @@ module.exports = function(app, mysql) {
     });
 
     app.get('/get/areas', (req, res) => {
-        mysql.getArea(function(result) {
+        mysql.getAreas(function(result) {
             res.send(result);
         })
     })
+
+    app.get('/get/area/:idArea', (req, res) => {
+        mysql.getArea({ idArea: req.params.idArea }, function(area) {
+            res.send(area);
+        })
+    });
 
     app.put('/put/area/:idArea', (req, res) => {
         Area.update({

@@ -31,6 +31,9 @@ init = function() {
 getRoll = function(options, callback) {
     Roll.findOne({ where: { idRoll: options.idRoll } }).then(roll => callback(roll));
 };
+getArea = function(options, callback) {
+    Area.findOne({ where: { idArea: options.idArea } }).then(area => callback(area));
+}
 
 getRolls = function(callback) {
     Roll.findAll().then(rolls => callback(rolls));
@@ -60,7 +63,7 @@ getInternos = function(callback) {
         attributes: ['idInterno'],
     }).then(interno => callback(interno));
 };
-getArea = function(callback) {
+getAreas = function(callback) {
     Area.findAll().then(area => callback(area));
 }
 
@@ -146,10 +149,11 @@ module.exports.postArea = postArea;
 module.exports.postUsuarios = postUsuarios;
 module.exports.postInternos = postInternos;
 module.exports.getInternos = getInternos;
-module.exports.getArea = getArea;
+module.exports.getAreas = getArea;
 module.exports.getRoll = getRoll;
 module.exports.getMaximoUsers = getMaximoUsers;
 module.exports.postHorario = postHorario;
 module.exports.postEmpleado = postEmpleado
 module.exports.getRolls = getRolls;
 module.exports.getEstatus = getEstatus;
+module.exports.getArea = getArea;
