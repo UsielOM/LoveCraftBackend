@@ -61,7 +61,11 @@ getInternos = function(callback) {
     }).then(interno => callback(interno));
 };
 getArea = function(callback) {
-        Area.findAll().then(area => callback(area));
+    Area.findAll().then(area => callback(area));
+}
+
+getEstatus = function(callback) {
+        Estatus.findAll().then(estatu => callback(estatu));
     }
     //Metodos Post
 
@@ -147,4 +151,5 @@ module.exports.getRoll = getRoll;
 module.exports.getMaximoUsers = getMaximoUsers;
 module.exports.postHorario = postHorario;
 module.exports.postEmpleado = postEmpleado
-module.exports.getRolls = getRolls
+module.exports.getRolls = getRolls;
+module.exports.getEstatus = getEstatus;
