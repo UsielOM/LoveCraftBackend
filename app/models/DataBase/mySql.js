@@ -151,8 +151,15 @@ putArea = function(req, callback) {
         callback(area);
     });
 }
-
-//Metods Delete
+purRoll = function(request, callback) {
+        Roll.findOne({ where: { idRoll: request.idRoll } }).then(function(roll) {
+            roll.update({
+                Descripcion: request.Descripcion
+            });
+            callback(roll);
+        })
+    }
+    //Metods Delete
 deleteArea = function(idArea, callback) {
     Area.findOne({ where: { idArea: idArea } }).then(function(article) {
         if (article != null) {
