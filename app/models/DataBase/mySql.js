@@ -151,7 +151,7 @@ putArea = function(req, callback) {
         callback(area);
     });
 }
-purRoll = function(request, callback) {
+putRoll = function(request, callback) {
         Roll.findOne({ where: { idRoll: request.idRoll } }).then(function(roll) {
             roll.update({
                 Descripcion: request.Descripcion
@@ -187,7 +187,7 @@ module.exports.getArea = getArea;
 
 //put
 module.exports.putArea = putArea;
-module.exports.purRoll = purRoll;
+module.exports.putRoll = putRoll;
 
 //Delete
 module.exports.deleteArea = deleteArea;

@@ -20,10 +20,10 @@ module.exports = function(app, mysql) {
     })
 
     app.put('/put/roll', (req, res) => {
-        mysql.purRoll(req.params.idRoll, result => {
+        mysql.putRoll(req.body, function(result) {
             res.send(result);
-        })
-    })
+        });
+    });
 
     app.delete('/delete/roll/:idRoll', (req, res) => {
         Roll.destroy({
