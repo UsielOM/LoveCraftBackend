@@ -170,6 +170,16 @@ deleteArea = function(idArea, callback) {
     });
 };
 
+deleteRoll = function(idRoll, callback) {
+    Roll.findOne({ where: { idRoll: idRoll } }).then(function(article) {
+        if (article != null) {
+            article.destroy().then(result => callback(result));
+        } else {
+            callback(null)
+        }
+    });
+}
+
 module.exports.init = init;
 module.exports.postRoll = postRoll;
 module.exports.postArea = postArea;
@@ -191,3 +201,4 @@ module.exports.putRoll = putRoll;
 
 //Delete
 module.exports.deleteArea = deleteArea;
+module.exports.deleteRoll = deleteRoll
