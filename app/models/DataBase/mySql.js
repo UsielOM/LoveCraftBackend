@@ -31,9 +31,7 @@ init = function() {
 getRoll = function(options, callback) {
     Roll.findOne({ where: { idRoll: options.idRoll } }).then(roll => callback(roll));
 };
-getArea = function(options, callback) {
-    Area.findOne({ where: { idArea: options.idArea } }).then(area => callback(area));
-}
+
 
 getRolls = function(callback) {
     Roll.findAll().then(rolls => callback(rolls));
@@ -65,6 +63,9 @@ getInternos = function(callback) {
 };
 getAreas = function(callback) {
     Area.findAll().then(area => callback(area));
+}
+getArea = function(idArea, callback) {
+    Area.findOne({ where: { idArea: idArea } }).then(area => callback(area));
 }
 
 getEstatus = function(callback) {
@@ -142,14 +143,21 @@ postEmpleado = function(request, callback) {
     }
     //Metodos PUT
 
-
+putArea = function(req, callback) {
+    Area.findOne({ where: { idArea: req.idArea } }).then(function(area) {
+        area.update({
+            Nombre: req.Nombre
+        });
+        callback(area);
+    });
+}
 module.exports.init = init;
 module.exports.postRoll = postRoll;
 module.exports.postArea = postArea;
 module.exports.postUsuarios = postUsuarios;
 module.exports.postInternos = postInternos;
 module.exports.getInternos = getInternos;
-module.exports.getAreas = getArea;
+module.exports.getAreas = getAreas;
 module.exports.getRoll = getRoll;
 module.exports.getMaximoUsers = getMaximoUsers;
 module.exports.postHorario = postHorario;
@@ -157,3 +165,6 @@ module.exports.postEmpleado = postEmpleado
 module.exports.getRolls = getRolls;
 module.exports.getEstatus = getEstatus;
 module.exports.getArea = getArea;
+
+//put
+module.exports.putArea = putArea

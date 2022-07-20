@@ -21,9 +21,7 @@ module.exports = function(app, mysql) {
     })
 
     app.get('/get/area/:idArea', (req, res) => {
-        mysql.getArea({ idArea: req.params.idArea }, function(area) {
-            res.send(area);
-        })
+        mysql.getArea(req.params.idArea, result => res.send(result));
     });
 
     app.put('/put/area/:idArea', (req, res) => {
