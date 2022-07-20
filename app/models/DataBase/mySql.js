@@ -151,6 +151,18 @@ putArea = function(req, callback) {
         callback(area);
     });
 }
+
+//Metods Delete
+deleteArea = function(idArea, callback) {
+    Area.findOne({ where: { idArea: idArea } }).then(function(article) {
+        if (article != null) {
+            article.destroy().then(result => callback(result));
+        } else {
+            callback(null);
+        }
+    });
+};
+
 module.exports.init = init;
 module.exports.postRoll = postRoll;
 module.exports.postArea = postArea;
@@ -167,4 +179,7 @@ module.exports.getEstatus = getEstatus;
 module.exports.getArea = getArea;
 
 //put
-module.exports.putArea = putArea
+module.exports.putArea = putArea;
+
+//Delete
+module.exports.deleteArea = deleteArea;
