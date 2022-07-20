@@ -23,13 +23,8 @@ module.exports = function(app, mysql) {
     app.get('/get/area/:idArea', (req, res) => {
         mysql.getArea(req.params.idArea, result => res.send(result));
     });
-
-    app.put('/put/area/:idArea', (req, res) => {
-        Area.update({
-            Nombre: req.body.Nombre
-        }, {
-            where: { idArea: req.params.idArea }
-        }).then(result => {
+    app.put('/put/area', (req, res) => {
+        mysql.putArea(req.body, function(result) {
             res.send(result);
         });
     });
