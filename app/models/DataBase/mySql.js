@@ -187,6 +187,7 @@ module.exports.getArea = getArea;
 
 //put
 module.exports.putArea = putArea;
+module.exports.purRoll = purRoll;
 
 //Delete
 module.exports.deleteArea = deleteArea;

@@ -19,17 +19,11 @@ module.exports = function(app, mysql) {
         })
     })
 
-    app.put('/put/roll/:idRoll', (request, response) => {
-
-        Roll.update({
-            Descripcion: request.body.Descripcion
-        }, {
-            where: { idRoll: request.params.idRoll }
-        }).then(result => {
-            response.send(result);
-        });
-    });
-
+    app.put('/put/roll', (req, res) => {
+        mysql.purRoll(req.params.idRoll, result => {
+            res.send(result);
+        })
+    })
 
     app.delete('/delete/roll/:idRoll', (req, res) => {
         Roll.destroy({
