@@ -26,11 +26,13 @@ module.exports = function(app, mysql) {
     });
 
     app.delete('/delete/roll/:idRoll', (req, res) => {
-        Roll.destroy({
-            where: { idRoll: req.params.idRoll }
-        }).then(result => {
-            res.json(result);
-        });
+        mysql.deleteRoll(req.params.idRoll, result => {
+            if (result != null) {
+                res.send(result);
+            } else {
+                res.status(400).send({ message: "El Roll no se pudo borrar " });
+            }
+        })
     })
 
 
