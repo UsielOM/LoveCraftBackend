@@ -61,6 +61,21 @@ getInternos = function(callback) {
         attributes: ['idInterno'],
     }).then(interno => callback(interno));
 };
+
+getInternoUser = function(idUsuarios, callback) {
+
+    Interno.findOne({
+        where: { idUsuarios: idUsuarios },
+        include: [
+            { model: Estatus, attributes: ['estatus'] },
+            { model: Usuarios, attributes: ['Nombre', 'Apellido', 'Telefono', 'Correo', 'Direccion'] },
+            { model: Area, attributes: ['Nombre'] },
+            { model: Roll, attributes: ['Descripcion'] },
+
+        ],
+        attributes: ['idInterno']
+    }).then(inte => callback(inte));
+}
 getAreas = function(callback) {
     Area.findAll().then(area => callback(area));
 }
@@ -121,7 +136,7 @@ postHorario = function(request, callback) {
 
 postEmpleado = function(request, callback) {
         const salt = bcrypt.genSaltSync();
-        pw2 = bcrypt.hashSync(request.Contraseña, salt);
+        pw2 = bcrypt.hashSync(request.Contrasena, salt);
         Usuarios.create({
             Nombre: request.Nombre,
             Apellido: request.Apellido,
@@ -185,6 +200,7 @@ module.exports.postRoll = postRoll;
 module.exports.postArea = postArea;
 module.exports.postUsuarios = postUsuarios;
 module.exports.postInternos = postInternos;
+module.exports.getInternoUser = getInternoUser;
 module.exports.getInternos = getInternos;
 module.exports.getAreas = getAreas;
 module.exports.getRoll = getRoll;

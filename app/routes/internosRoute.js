@@ -45,4 +45,11 @@ module.exports = function(app, mysql) {
         });
     })
 
+
+    app.get('/get/iu/:idUsuarios', (req, res) => {
+        mysql.getInternoUser(req.params.idUsuarios, result => res.send(result));
+
+    });
+
+
 }
