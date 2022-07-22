@@ -53,7 +53,7 @@ getInternos = function(callback) {
     Interno.findAll({
         include: [
             { model: Estatus, attributes: ['estatus'] },
-            { model: Usuarios, attributes: ['Nombre'] },
+            { model: Usuarios, attributes: ['idUsuarios', 'Nombre'] },
             { model: Area, attributes: ['Nombre'] },
             { model: Roll, attributes: ['Descripcion'] }
 
@@ -67,13 +67,13 @@ getInternoUser = function(idUsuarios, callback) {
     Interno.findOne({
         where: { idUsuarios: idUsuarios },
         include: [
-            { model: Estatus, attributes: ['estatus'] },
+            { model: Estatus, attributes: ['idEstatus', 'estatus'] },
             { model: Usuarios, attributes: ['Nombre', 'Apellido', 'Telefono', 'Correo', 'Direccion'] },
-            { model: Area, attributes: ['Nombre'] },
-            { model: Roll, attributes: ['Descripcion'] },
+            { model: Area, attributes: ['idArea', 'Nombre'] },
+            { model: Roll, attributes: ['idRoll', 'Descripcion'] },
 
         ],
-        attributes: ['idInterno']
+        attributes: ['idInterno', 'Edad', 'idRoll', 'idArea', 'idEstatus']
     }).then(inte => callback(inte));
 }
 getAreas = function(callback) {
@@ -166,6 +166,29 @@ putArea = function(req, callback) {
         callback(area);
     });
 }
+putEmpleado = function(request, callback) {
+    Interno.findOne({ where: { idUsuarios: request.idUsuarios } }).then(function(inter) {
+        inter.update({
+            Edad: request.Edad,
+            idEstatus: request.idEstatus,
+            idArea: request.idArea,
+            idRoll: request.idRoll
+        });
+        callback(inter)
+    });
+
+}
+
+putUsuario = function(request, callback) {
+    Usuarios.findOne({ where: { idUsuarios: request.idUsuarios } }).then(function(usario) {
+        usario.update({
+            Correo: request.Correo,
+            Direccion: request.Direccion,
+            Telefono: request.Telefono
+        });
+        callback(usario)
+    });
+}
 putRoll = function(request, callback) {
         Roll.findOne({ where: { idRoll: request.idRoll } }).then(function(roll) {
             roll.update({
@@ -214,6 +237,8 @@ module.exports.getArea = getArea;
 //put
 module.exports.putArea = putArea;
 module.exports.putRoll = putRoll;
+module.exports.putEmpleado = putEmpleado;
+module.exports.putUsuario = putUsuario;
 
 //Delete
 module.exports.deleteArea = deleteArea;
