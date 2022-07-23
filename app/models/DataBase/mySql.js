@@ -73,7 +73,7 @@ getInternoUser = function(idUsuarios, callback) {
             { model: Roll, attributes: ['idRoll', 'Descripcion'] },
 
         ],
-        attributes: ['idInterno', 'Edad', 'idRoll', 'idArea', 'idEstatus']
+        attributes: ['idInterno', 'Edad', 'idRoll', 'idArea', 'idEstatus', 'idUsuarios']
     }).then(inte => callback(inte));
 }
 getAreas = function(callback) {
@@ -182,9 +182,11 @@ putEmpleado = function(request, callback) {
 putUsuario = function(request, callback) {
     Usuarios.findOne({ where: { idUsuarios: request.idUsuarios } }).then(function(usario) {
         usario.update({
-            Correo: request.Correo,
-            Direccion: request.Direccion,
-            Telefono: request.Telefono
+            Correo: request.usuario.Correo,
+            Direccion: request.usuario.Direccion,
+            Telefono: request.usuario.Telefono,
+            Nombre: request.usuario.Nombre,
+            Apellido: request.usuario.Apellido
         });
         callback(usario)
     });
