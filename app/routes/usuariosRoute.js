@@ -11,4 +11,10 @@ module.exports = function(app, mysql) {
         })
     });
 
+    app.put('/put/usuario', (req, res) => {
+        mysql.putUsuario(req.body, function(result) {
+            res.send(result);
+        })
+    })
+
 }

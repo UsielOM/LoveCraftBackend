@@ -11,10 +11,7 @@ const Interno = sequelize.define('interno', {
 
 
     },
-    Direccion: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false
-    },
+
     Foto: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false
@@ -47,6 +44,7 @@ const Interno = sequelize.define('interno', {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
     }
+
 }, {
     freezeTableName: true, //Esta linea va en todos los modelos que hagan para que respete el nombre
     timestamps: false, //Esta linea va en todos los modelos para que no les cree los campo de Creacion y actualizacion 

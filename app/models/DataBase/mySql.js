@@ -8,6 +8,8 @@ const Area = require('../Tablas/Area');
 const Usuarios = require('../Tablas/Usuarios');
 const foreigKey = require('./relaciones');
 const Estatus = require('../Tablas/Estatus');
+const Horario = require('../Tablas/Horario');
+const bcrypt = require('bcryptjs');
 
 init = function() {
     sequelize.authenticate().then(() => {
@@ -30,6 +32,10 @@ getRoll = function(options, callback) {
     Roll.findOne({ where: { idRoll: options.idRoll } }).then(roll => callback(roll));
 };
 
+
+getRolls = function(callback) {
+    Roll.findAll().then(rolls => callback(rolls));
+}
 getMaximoUsers = function(callback) {
 
     Usuarios.findAll({
@@ -47,7 +53,7 @@ getInternos = function(callback) {
     Interno.findAll({
         include: [
             { model: Estatus, attributes: ['estatus'] },
-            { model: Usuarios, attributes: ['Nombre'] },
+            { model: Usuarios, attributes: ['idUsuarios', 'Nombre'] },
             { model: Area, attributes: ['Nombre'] },
             { model: Roll, attributes: ['Descripcion'] }
 
@@ -55,8 +61,30 @@ getInternos = function(callback) {
         attributes: ['idInterno'],
     }).then(interno => callback(interno));
 };
-getArea = function(callback) {
-        Area.findAll().then(area => callback(area));
+
+getInternoUser = function(idUsuarios, callback) {
+
+    Interno.findOne({
+        where: { idUsuarios: idUsuarios },
+        include: [
+            { model: Estatus, attributes: ['idEstatus', 'estatus'] },
+            { model: Usuarios, attributes: ['Nombre', 'Apellido', 'Telefono', 'Correo', 'Direccion'] },
+            { model: Area, attributes: ['idArea', 'Nombre'] },
+            { model: Roll, attributes: ['idRoll', 'Descripcion'] },
+
+        ],
+        attributes: ['idInterno', 'Edad', 'idRoll', 'idArea', 'idEstatus', 'idUsuarios']
+    }).then(inte => callback(inte));
+}
+getAreas = function(callback) {
+    Area.findAll().then(area => callback(area));
+}
+getArea = function(idArea, callback) {
+    Area.findOne({ where: { idArea: idArea } }).then(area => callback(area));
+}
+
+getEstatus = function(callback) {
+        Estatus.findAll().then(estatu => callback(estatu));
     }
     //Metodos Post
 
@@ -76,56 +104,144 @@ postUsuarios = function(request, callback) {
         Nombre: request.Nombre,
         Apellido: request.Apellido,
         Telefono: request.Telefono,
-        Correo: request.Correo
+        Correo: request.Correo,
+        Direccion: request.Direccion
     }).then(callback(true));
 
 };
 
 postInternos = function(request, callback) {
+    const salt = bcrypt.genSaltSync();
+    pw2 = bcrypt.hashSync(request.Contraseña, salt);
+
     Interno.create({
-        Direccion: request.Direccion,
         Foto: request.Foto,
-        Contraseña: request.Contraseña,
+        Contraseña: pw2,
         Fech_ingre: request.Fech_ingre,
         Edad: request.Edad,
         idEstatus: request.idEstatus,
         idUsuarios: request.idUsuarios,
         idArea: request.idArea,
-        idRoll: request.idRoll
+        idRoll: request.idRoll,
+        idHorario: request.idHorario
+    }).then(callback(true));
+}
+postHorario = function(request, callback) {
+    Horario.create({
+        Fecha: request.Fecha,
+        Hora_inicial: request.Hora_inicial,
+        Hora_final: request.Hora_final
     }).then(callback(true));
 }
 
-
 postEmpleado = function(request, callback) {
-
+        const salt = bcrypt.genSaltSync();
+        pw2 = bcrypt.hashSync(request.Contrasena, salt);
         Usuarios.create({
             Nombre: request.Nombre,
             Apellido: request.Apellido,
             Telefono: request.Telefono,
-            Correo: request.Correo
+            Correo: request.Correo,
+            Direccion: request.Direccion
         })
         Interno.create({
-            Direccion: request.Direccion,
             Foto: request.Foto,
-            Contraseña: request.Contraseña,
+            Contraseña: pw2,
             Fech_ingre: request.Fech_ingre,
             Edad: request.Edad,
             idEstatus: request.idEstatus,
             idUsuarios: request.idUsuarios,
             idArea: request.idArea,
             idRoll: request.idRoll
+
         }).then(callback(true));
     }
     //Metodos PUT
 
+putArea = function(req, callback) {
+    Area.findOne({ where: { idArea: req.idArea } }).then(function(area) {
+        area.update({
+            Nombre: req.Nombre
+        });
+        callback(area);
+    });
+}
+putEmpleado = function(request, callback) {
+    Interno.findOne({ where: { idUsuarios: request.idUsuarios } }).then(function(inter) {
+        inter.update({
+            Edad: request.Edad,
+            idEstatus: request.idEstatus,
+            idArea: request.idArea,
+            idRoll: request.idRoll
+        });
+        callback(inter)
+    });
+
+}
+
+putUsuario = function(request, callback) {
+    Usuarios.findOne({ where: { idUsuarios: request.idUsuarios } }).then(function(usario) {
+        usario.update({
+            Correo: request.usuario.Correo,
+            Direccion: request.usuario.Direccion,
+            Telefono: request.usuario.Telefono,
+            Nombre: request.usuario.Nombre,
+            Apellido: request.usuario.Apellido
+        });
+        callback(usario)
+    });
+}
+putRoll = function(request, callback) {
+        Roll.findOne({ where: { idRoll: request.idRoll } }).then(function(roll) {
+            roll.update({
+                Descripcion: request.Descripcion
+            });
+            callback(roll);
+        })
+    }
+    //Metods Delete
+deleteArea = function(idArea, callback) {
+    Area.findOne({ where: { idArea: idArea } }).then(function(article) {
+        if (article != null) {
+            article.destroy().then(result => callback(result));
+        } else {
+            callback(null);
+        }
+    });
+};
+
+deleteRoll = function(idRoll, callback) {
+    Roll.findOne({ where: { idRoll: idRoll } }).then(function(article) {
+        if (article != null) {
+            article.destroy().then(result => callback(result));
+        } else {
+            callback(null)
+        }
+    });
+}
 
 module.exports.init = init;
 module.exports.postRoll = postRoll;
 module.exports.postArea = postArea;
 module.exports.postUsuarios = postUsuarios;
 module.exports.postInternos = postInternos;
+module.exports.getInternoUser = getInternoUser;
 module.exports.getInternos = getInternos;
-module.exports.getArea = getArea;
+module.exports.getAreas = getAreas;
 module.exports.getRoll = getRoll;
 module.exports.getMaximoUsers = getMaximoUsers;
+module.exports.postHorario = postHorario;
+module.exports.postEmpleado = postEmpleado
+module.exports.getRolls = getRolls;
+module.exports.getEstatus = getEstatus;
+module.exports.getArea = getArea;
 
+//put
+module.exports.putArea = putArea;
+module.exports.putRoll = putRoll;
+module.exports.putEmpleado = putEmpleado;
+module.exports.putUsuario = putUsuario;
+
+//Delete
+module.exports.deleteArea = deleteArea;
+module.exports.deleteRoll = deleteRoll
