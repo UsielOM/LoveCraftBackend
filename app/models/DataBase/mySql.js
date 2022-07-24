@@ -210,6 +210,26 @@ deleteArea = function(idArea, callback) {
     });
 };
 
+deleteUsuario = function(idUsuarios, callback) {
+    Usuarios.findOne({ where: { idUsuarios: idUsuarios } }).then(function(user) {
+        if (user != null) {
+            user.destroy().then(result => callback(result))
+        } else {
+            callback(null);
+        }
+    })
+}
+
+deleteInterno = function(idUsuarios, callback) {
+    Interno.destroy({ where: { idUsuarios: idUsuarios } }).then(function(interno) {
+        if (interno != null) {
+            user.destroy().then(result => callback(result))
+        } else {
+            callback(null)
+        }
+    })
+}
+
 deleteRoll = function(idRoll, callback) {
     Roll.findOne({ where: { idRoll: idRoll } }).then(function(article) {
         if (article != null) {
@@ -244,4 +264,6 @@ module.exports.putUsuario = putUsuario;
 
 //Delete
 module.exports.deleteArea = deleteArea;
-module.exports.deleteRoll = deleteRoll
+module.exports.deleteRoll = deleteRoll;
+module.exports.deleteUsuario = deleteUsuario;
+module.exports.deleteInterno = deleteInterno;
