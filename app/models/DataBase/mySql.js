@@ -78,6 +78,20 @@ getInternoUser = function(idUsuarios, callback) {
         attributes: ['idInterno', 'Edad', 'idRoll', 'idArea', 'idEstatus', 'idUsuarios']
     }).then(inte => callback(inte));
 }
+
+getCitas = function(idInterno, callback) {
+    Citas.findAll({
+        where: { idInterno: idInterno },
+        include: [
+            { model: Visita, attributes: ['Identificacion'] },
+            { model: Usuarios, attributes: ['Nombre'] }
+
+        ],
+        attributes: ['idCitas', 'Razon', 'Estatus']
+
+    }).then(cita => callback(cita));
+}
+
 getAreas = function(callback) {
     Area.findAll().then(area => callback(area));
 }
@@ -262,7 +276,7 @@ deleteRoll = function(idRoll, callback) {
         }
     });
 }
-
+module.exports.getCitas = getCitas;
 module.exports.init = init;
 module.exports.postRoll = postRoll;
 module.exports.postArea = postArea;
