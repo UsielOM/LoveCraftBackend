@@ -17,4 +17,14 @@ module.exports = function(app, mysql) {
         })
     })
 
+    app.delete('/delete/usuario/:idUsuarios', (req, res) => {
+        mysql.deleteUsuario(req.params.idUsuarios, result => {
+            if (result != null) {
+                res.send(result);
+            } else {
+                res.status(400).send({ message: "El usuario no se pudo borrar " })
+            }
+        })
+    })
+
 }

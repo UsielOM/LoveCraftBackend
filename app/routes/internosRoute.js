@@ -34,5 +34,14 @@ module.exports = function(app, mysql) {
 
     });
 
+    app.delete('/delete/interno/:idUsuarios', (req, res) => {
+        mysql.deleteInterno(req.params.idUsuarios, result => {
+            if (result != null) {
+                res.send(result);
+            } else {
+                res.status(400).send({ message: "El empleado no se pudo borrar " })
+            }
+        });
+    });
 
 }
