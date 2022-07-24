@@ -10,6 +10,8 @@ const foreigKey = require('./relaciones');
 const Estatus = require('../Tablas/Estatus');
 const Horario = require('../Tablas/Horario');
 const bcrypt = require('bcryptjs');
+const Visita = require('../Tablas/Visita');
+const Citas = require('../Tablas/Citas');
 
 init = function() {
     sequelize.authenticate().then(() => {
@@ -135,8 +137,28 @@ postHorario = function(request, callback) {
 }
 
 postEmpleado = function(request, callback) {
-        const salt = bcrypt.genSaltSync();
-        pw2 = bcrypt.hashSync(request.Contrasena, salt);
+    const salt = bcrypt.genSaltSync();
+    pw2 = bcrypt.hashSync(request.Contrasena, salt);
+    Usuarios.create({
+        Nombre: request.Nombre,
+        Apellido: request.Apellido,
+        Telefono: request.Telefono,
+        Correo: request.Correo,
+        Direccion: request.Direccion
+    })
+    Interno.create({
+        Foto: request.Foto,
+        Contraseña: pw2,
+        Fech_ingre: request.Fech_ingre,
+        Edad: request.Edad,
+        idEstatus: request.idEstatus,
+        idUsuarios: request.idUsuarios,
+        idArea: request.idArea,
+        idRoll: request.idRoll
+
+    }).then(callback(true));
+}
+postCita = function(request, callback) {
         Usuarios.create({
             Nombre: request.Nombre,
             Apellido: request.Apellido,
@@ -144,16 +166,17 @@ postEmpleado = function(request, callback) {
             Correo: request.Correo,
             Direccion: request.Direccion
         })
-        Interno.create({
-            Foto: request.Foto,
-            Contraseña: pw2,
-            Fech_ingre: request.Fech_ingre,
-            Edad: request.Edad,
-            idEstatus: request.idEstatus,
-            idUsuarios: request.idUsuarios,
+        Visita.create({
+            Identificacion: request.Identificacion,
+            idUsuario: request.idUsuario
+        })
+        Citas.create({
+            Razon: request.Razon,
+            Descripcion: request.Descripcion,
+            Estatus: request.Estatus,
+            idInterno: request.idInterno,
             idArea: request.idArea,
-            idRoll: request.idRoll
-
+            idVisita: request.idVisita
         }).then(callback(true));
     }
     //Metodos PUT
@@ -255,6 +278,8 @@ module.exports.postEmpleado = postEmpleado
 module.exports.getRolls = getRolls;
 module.exports.getEstatus = getEstatus;
 module.exports.getArea = getArea;
+//post
+module.exports.postCita = postCita;
 
 //put
 module.exports.putArea = putArea;
