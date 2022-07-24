@@ -221,9 +221,9 @@ deleteUsuario = function(idUsuarios, callback) {
 }
 
 deleteInterno = function(idUsuarios, callback) {
-    Interno.destroy({ where: { idUsuarios: idUsuarios } }).then(function(interno) {
+    Interno.findOne({ where: { idUsuarios: idUsuarios } }).then(function(interno) {
         if (interno != null) {
-            user.destroy().then(result => callback(result))
+            interno.destroy().then(result => callback(result))
         } else {
             callback(null)
         }
