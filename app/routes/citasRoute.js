@@ -5,6 +5,12 @@ module.exports = function(app, mysql) {
         })
     });
 
+    app.get('/get/citas/:idInterno', (req, res) => {
+        mysql.getCitas(req.params.idInterno, result => res.send(result))
+    })
+
+
+
 
 
 }

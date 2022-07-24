@@ -30,7 +30,7 @@ const Citas = sequelize.define('citas', {
     idVisita: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
-    },
+    }
 
 
 }, {

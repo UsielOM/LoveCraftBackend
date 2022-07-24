@@ -83,11 +83,11 @@ getCitas = function(idInterno, callback) {
     Citas.findAll({
         where: { idInterno: idInterno },
         include: [
-            { model: Visita, attributes: ['Identificacion'] },
-            { model: Usuarios, attributes: ['Nombre'] }
+            { model: Area, attributes: ['idArea', 'Nombre'] }
+            // { model: Usuarios,attributes: ['idUsuarios', 'Nombre'] }
 
         ],
-        attributes: ['idCitas', 'Razon', 'Estatus']
+        attributes: ['idCitas', 'Razon', 'Estatus', 'idInterno']
 
     }).then(cita => callback(cita));
 }
