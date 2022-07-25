@@ -77,7 +77,9 @@ getInternoUsuarioArea = function(idArea, callback) {
         attributes: ['idInterno']
     }).then(intuseare => callback(intuseare));
 }
-
+getUserCorreo = function(Correo, callback) {
+    Usuarios.findOne({ where: { Correo: Correo } }).then(user => callback(user));
+}
 
 getInternoUser = function(idUsuarios, callback) {
 
@@ -333,3 +335,4 @@ module.exports.getInternoUsuarioArea = getInternoUsuarioArea;
 module.exports.getCitas = getCitas;
 module.exports.getTableCitas = getTableCitas;
 module.exports.getHorario = getHorario;
+module.exports.getUserCorreo = getUserCorreo;
