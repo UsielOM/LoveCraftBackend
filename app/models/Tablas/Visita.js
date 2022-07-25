@@ -4,21 +4,20 @@ const { Sequelize } = require('sequelize'); //Esta linea va en todos los modelos
 const sequelize = require('../DataBase/configDb'); //Esta linea va en todos los modelos que hagan
 
 
-const Horario = sequelize.define('horario', {
-    idHorario: {
+const Visita = sequelize.define('visita', {
+    idVisita: {
         type: Sequelize.DataTypes.INTEGER,
         primaryKey: true, //Si quieren que sea llave primaria o la identifique como una
         autoIncrement: true
     },
-    idInterno: {
-        type: Sequelize.DataTypes.INTEGER
+    Identificacion: {
+        type: Sequelize.DataTypes.STRING
     },
-    Fecha: {
-        type: Sequelize.DataTypes.DATE
-    },
-    Hora_visita: {
-        type: Sequelize.DataTypes.DATE
+    idUsuario: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false
     }
+
 }, {
     freezeTableName: true, //Esta linea va en todos los modelos que hagan para que respete el nombre
     timestamps: false, //Esta linea va en todos los modelos para que no les cree los campo de Creacion y actualizacion 
@@ -26,6 +25,6 @@ const Horario = sequelize.define('horario', {
 })
 
 
-module.exports = Horario; //Debemos importar nuestro modelo para poder usarlo en otros archivos 
+module.exports = Visita; //Debemos importar nuestro modelo para poder usarlo en otros archivos 
 
 //De esta manera  puden crear un modelo en base a las tablas que esten en la BD

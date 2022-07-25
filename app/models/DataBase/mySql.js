@@ -10,6 +10,9 @@ const foreigKey = require('./relaciones');
 const Estatus = require('../Tablas/Estatus');
 const Horario = require('../Tablas/Horario');
 const bcrypt = require('bcryptjs');
+const Visita = require('../Tablas/Visita');
+const Citas = require('../Tablas/Citas');
+
 
 init = function() {
     sequelize.authenticate().then(() => {
@@ -28,6 +31,9 @@ init = function() {
 
 
 //Metodos Get
+
+
+
 getRoll = function(options, callback) {
     Roll.findOne({ where: { idRoll: options.idRoll } }).then(roll => callback(roll));
 };
@@ -61,6 +67,17 @@ getInternos = function(callback) {
         attributes: ['idInterno'],
     }).then(interno => callback(interno));
 };
+getInternoUsuarioArea = function(idArea, callback) {
+    Interno.findAll({
+        where: { idArea: idArea },
+
+        include: [
+            { model: Usuarios, attributes: ['Nombre'] }
+        ],
+        attributes: ['idInterno']
+    }).then(intuseare => callback(intuseare));
+}
+
 
 getInternoUser = function(idUsuarios, callback) {
 
@@ -76,6 +93,21 @@ getInternoUser = function(idUsuarios, callback) {
         attributes: ['idInterno', 'Edad', 'idRoll', 'idArea', 'idEstatus', 'idUsuarios']
     }).then(inte => callback(inte));
 }
+
+getCitas = function(idInterno, callback) {
+    Citas.findAll({
+        where: { idInterno: idInterno },
+        include: [
+            { model: Usuarios, attributes: ['idUsuarios', 'Nombre'] },
+            // { model: Horario, attributes: ['idHorario'] }
+            { model: Interno, attributes: ['Edad'] },
+            // { model: Horario, attributes: ['idHorario'] }
+
+        ],
+        attributes: ['Razon', 'Descripcion', 'Estatus', 'idHorario']
+    }).then(citas => callback(citas));
+}
+
 getAreas = function(callback) {
     Area.findAll().then(area => callback(area));
 }
@@ -135,8 +167,28 @@ postHorario = function(request, callback) {
 }
 
 postEmpleado = function(request, callback) {
-        const salt = bcrypt.genSaltSync();
-        pw2 = bcrypt.hashSync(request.Contrasena, salt);
+    const salt = bcrypt.genSaltSync();
+    pw2 = bcrypt.hashSync(request.Contrasena, salt);
+    Usuarios.create({
+        Nombre: request.Nombre,
+        Apellido: request.Apellido,
+        Telefono: request.Telefono,
+        Correo: request.Correo,
+        Direccion: request.Direccion
+    })
+    Interno.create({
+        Foto: request.Foto,
+        Contraseña: pw2,
+        Fech_ingre: request.Fech_ingre,
+        Edad: request.Edad,
+        idEstatus: request.idEstatus,
+        idUsuarios: request.idUsuarios,
+        idArea: request.idArea,
+        idRoll: request.idRoll
+
+    }).then(callback(true));
+}
+postCita = function(request, callback) {
         Usuarios.create({
             Nombre: request.Nombre,
             Apellido: request.Apellido,
@@ -144,16 +196,14 @@ postEmpleado = function(request, callback) {
             Correo: request.Correo,
             Direccion: request.Direccion
         })
-        Interno.create({
-            Foto: request.Foto,
-            Contraseña: pw2,
-            Fech_ingre: request.Fech_ingre,
-            Edad: request.Edad,
-            idEstatus: request.idEstatus,
-            idUsuarios: request.idUsuarios,
-            idArea: request.idArea,
-            idRoll: request.idRoll
-
+        Citas.create({
+            Razon: request.Razon,
+            Descripcion: request.Descripcion,
+            Estatus: request.Estatus,
+            Documento: request.Documento,
+            idInterno: request.idInterno,
+            idHorario: request.idHorario,
+            idUsuarios: request.idUsuarios
         }).then(callback(true));
     }
     //Metodos PUT
@@ -210,6 +260,26 @@ deleteArea = function(idArea, callback) {
     });
 };
 
+deleteUsuario = function(idUsuarios, callback) {
+    Usuarios.findOne({ where: { idUsuarios: idUsuarios } }).then(function(user) {
+        if (user != null) {
+            user.destroy().then(result => callback(result))
+        } else {
+            callback(null);
+        }
+    })
+}
+
+deleteInterno = function(idUsuarios, callback) {
+    Interno.findOne({ where: { idUsuarios: idUsuarios } }).then(function(interno) {
+        if (interno != null) {
+            interno.destroy().then(result => callback(result))
+        } else {
+            callback(null)
+        }
+    })
+}
+
 deleteRoll = function(idRoll, callback) {
     Roll.findOne({ where: { idRoll: idRoll } }).then(function(article) {
         if (article != null) {
@@ -235,6 +305,8 @@ module.exports.postEmpleado = postEmpleado
 module.exports.getRolls = getRolls;
 module.exports.getEstatus = getEstatus;
 module.exports.getArea = getArea;
+//post
+module.exports.postCita = postCita;
 
 //put
 module.exports.putArea = putArea;
@@ -244,4 +316,10 @@ module.exports.putUsuario = putUsuario;
 
 //Delete
 module.exports.deleteArea = deleteArea;
-module.exports.deleteRoll = deleteRoll
+module.exports.deleteRoll = deleteRoll;
+module.exports.deleteUsuario = deleteUsuario;
+module.exports.deleteInterno = deleteInterno;
+
+//get
+module.exports.getInternoUsuarioArea = getInternoUsuarioArea;
+module.exports.getCitas = getCitas;
