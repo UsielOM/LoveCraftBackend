@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 module.exports = function(app, mysql) {
     app.post('/post/horario', (request, response) => {
         mysql.postHorario(request.body, function(result) {
@@ -6,5 +8,16 @@ module.exports = function(app, mysql) {
     });
 
 
+    app.get('/get/horarios', (req, res) => {
+        mysql.getAreas(function(result) {
+            res.send(result);
+        })
+    })
+    app.post('/get/horario',(request, response) => {
+        mysql.getHorario(request.body,function(result){
+            response.send(result);
+            console.log(request.body.Fecha)
+        })
+    });
 
 }

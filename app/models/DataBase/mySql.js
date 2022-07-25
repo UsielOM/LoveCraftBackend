@@ -75,7 +75,7 @@ getInternoUsuarioArea =function(idArea, callback){
             { model: Usuarios, attributes: ['idUsuarios', 'Nombre'] },
 
         ],
-        attributes: ['idInterno','Nombre'],
+        attributes: ['idInterno'],
     }).then(interno => callback(interno));
 }
 //getInternoUsuarioArea
@@ -119,6 +119,13 @@ getArea = function(idArea, callback) {
 getEstatus = function(callback) {
         Estatus.findAll().then(estatu => callback(estatu));
     }
+
+getHorario = function(request ,callback){
+    Horario.findAll(
+        { where: { idInterno: request.idInterno , Fecha: request.Fecha },
+        attributes:['Hora_visita']
+}).then(citas => callback(citas));
+}
     //Metodos Post
 
 postArea = function(request, callback) {
@@ -306,7 +313,7 @@ module.exports.postEmpleado = postEmpleado
 module.exports.getRolls = getRolls;
 module.exports.getEstatus = getEstatus;
 module.exports.getArea = getArea;
-
+module.exports.getHorario =getHorario;
 //put
 module.exports.putArea = putArea;
 module.exports.putRoll = putRoll;
@@ -321,4 +328,4 @@ module.exports.deleteInterno = deleteInterno;
 
 //get
 module.exports.getInternoUsuarioArea = getInternoUsuarioArea;
-module.exports.getCitas = getCitas;
+//module.exports.getCitas = getCitas;
