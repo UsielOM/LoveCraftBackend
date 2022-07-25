@@ -61,6 +61,21 @@ getInternos = function(callback) {
         attributes: ['idInterno'],
     }).then(interno => callback(interno));
 };
+//revisar
+getInternoPorArea =function(idArea, callback){
+    Interno.findAll({
+        where:{idArea:idArea},
+        include: [
+            { model: Estatus, attributes: ['estatus'] },
+            { model: Usuarios, attributes: ['idUsuarios', 'Nombre'] },
+            { model: Area, attributes: ['idArea','Nombre'] },
+            { model: Roll, attributes: ['Descripcion'] }
+
+        ],
+        attributes: ['idInterno','Nombre'],
+    }).then(interno => callback(interno));
+}
+
 
 getInternoUser = function(idUsuarios, callback) {
 
@@ -235,6 +250,7 @@ module.exports.postEmpleado = postEmpleado
 module.exports.getRolls = getRolls;
 module.exports.getEstatus = getEstatus;
 module.exports.getArea = getArea;
+module.exports.getInternoPorArea = getInternoPorArea;
 
 //put
 module.exports.putArea = putArea;

@@ -1,11 +1,17 @@
 const Interno = require('../models/Tablas/Interno');
 const bcrypt = require('bcryptjs');
+const { Result } = require('express-validator');
 module.exports = function(app, mysql) {
     app.get('/get/internoss', (request, response) => {
         mysql.getInternos(function(result) {
             response.send(result)
         })
     })
+
+    //corregir
+    app.get('/get/interno/:idArea'),(req,res)=> {
+        mysql.getInternoPorArea(req.params.idArea, result => res.send(result));
+    }
 
     app.post('/post/interno', (request, response) => {
         mysql.postEmpleado(request.body, function(result) {
