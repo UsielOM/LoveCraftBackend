@@ -13,6 +13,7 @@ const bcrypt = require('bcryptjs');
 const Visita = require('../Tablas/Visita');
 const Citas = require('../Tablas/Citas');
 
+
 init = function() {
     sequelize.authenticate().then(() => {
         console.log("Conexion establecida exitosamente con mysql.");
@@ -94,7 +95,17 @@ getInternoUser = function(idUsuarios, callback) {
 }
 
 getCitas = function(idInterno, callback) {
+    Citas.findAll({
+        where: { idInterno: idInterno },
+        include: [
+            { model: Usuarios, attributes: ['idUsuarios', 'Nombre'] },
+            // { model: Horario, attributes: ['idHorario'] }
+            { model: Interno, attributes: ['Edad'] },
+            // { model: Horario, attributes: ['idHorario'] }
 
+        ],
+        attributes: ['Razon', 'Descripcion', 'Estatus', 'idHorario']
+    }).then(citas => callback(citas));
 }
 
 getAreas = function(callback) {
@@ -185,17 +196,14 @@ postCita = function(request, callback) {
             Correo: request.Correo,
             Direccion: request.Direccion
         })
-        Visita.create({
-            Identificacion: request.Identificacion,
-            idUsuario: request.idUsuario
-        })
         Citas.create({
             Razon: request.Razon,
             Descripcion: request.Descripcion,
             Estatus: request.Estatus,
+            Documento: request.Documento,
             idInterno: request.idInterno,
-            idArea: request.idArea,
-            idVisita: request.idVisita
+            idHorario: request.idHorario,
+            idUsuarios: request.idUsuarios
         }).then(callback(true));
     }
     //Metodos PUT
@@ -281,7 +289,7 @@ deleteRoll = function(idRoll, callback) {
         }
     });
 }
-module.exports.getCitas = getCitas;
+
 module.exports.init = init;
 module.exports.postRoll = postRoll;
 module.exports.postArea = postArea;
@@ -314,3 +322,4 @@ module.exports.deleteInterno = deleteInterno;
 
 //get
 module.exports.getInternoUsuarioArea = getInternoUsuarioArea;
+module.exports.getCitas = getCitas;

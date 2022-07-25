@@ -34,6 +34,10 @@ module.exports = function(app, mysql) {
 
     });
 
+    app.get('/get/iua/:idArea', (req, res) => {
+        mysql.getInternoUsuarioArea(req.params.idArea, result => res.send(result));
+    })
+
     app.delete('/delete/interno/:idUsuarios', (req, res) => {
         mysql.deleteInterno(req.params.idUsuarios, result => {
             if (result != null) {
