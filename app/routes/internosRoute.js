@@ -40,5 +40,18 @@ module.exports = function(app, mysql) {
 
     });
 
+    app.get('/get/iua/:idArea', (req, res) => {
+        mysql.getInternoUsuarioArea(req.params.idArea, result => res.send(result));
+    })
+
+    app.delete('/delete/interno/:idUsuarios', (req, res) => {
+        mysql.deleteInterno(req.params.idUsuarios, result => {
+            if (result != null) {
+                res.send(result);
+            } else {
+                res.status(400).send({ message: "El empleado no se pudo borrar " })
+            }
+        });
+    });
 
 }
