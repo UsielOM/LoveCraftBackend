@@ -19,15 +19,18 @@ const Citas = sequelize.define('citas', {
     Estatus: {
         type: Sequelize.DataTypes.STRING
     },
+    Documento: {
+        type: Sequelize.DataTypes.STRING
+    },
     idInterno: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
     },
-    idArea: {
+    idHorario: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
     },
-    idVisita: {
+    idUsuarios: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
     }

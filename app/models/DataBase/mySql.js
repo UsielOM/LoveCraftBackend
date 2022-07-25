@@ -30,6 +30,8 @@ init = function() {
 
 
 //Metodos Get
+
+
 getRoll = function(options, callback) {
     Roll.findOne({ where: { idRoll: options.idRoll } }).then(roll => callback(roll));
 };
@@ -80,16 +82,7 @@ getInternoUser = function(idUsuarios, callback) {
 }
 
 getCitas = function(idInterno, callback) {
-    Citas.findAll({
-        where: { idInterno: idInterno },
-        include: [
-            { model: Area, attributes: ['idArea', 'Nombre'] }
-            // { model: Usuarios,attributes: ['idUsuarios', 'Nombre'] }
 
-        ],
-        attributes: ['idCitas', 'Razon', 'Estatus', 'idInterno']
-
-    }).then(cita => callback(cita));
 }
 
 getAreas = function(callback) {
