@@ -37,6 +37,9 @@ init = function() {
 getRoll = function(options, callback) {
     Roll.findOne({ where: { idRoll: options.idRoll } }).then(roll => callback(roll));
 };
+getInternoID = function(idUsuarios, callback) {
+    Interno.findOne({ where: { idUsuarios: idUsuarios } }).then(interno => callback(interno))
+}
 
 
 getRolls = function(callback) {
@@ -336,3 +339,4 @@ module.exports.getCitas = getCitas;
 module.exports.getTableCitas = getTableCitas;
 module.exports.getHorario = getHorario;
 module.exports.getUserCorreo = getUserCorreo;
+module.exports.getInternoID = getInternoID;
