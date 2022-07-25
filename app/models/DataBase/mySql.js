@@ -32,6 +32,7 @@ init = function() {
 //Metodos Get
 
 
+
 getRoll = function(options, callback) {
     Roll.findOne({ where: { idRoll: options.idRoll } }).then(roll => callback(roll));
 };
@@ -65,6 +66,17 @@ getInternos = function(callback) {
         attributes: ['idInterno'],
     }).then(interno => callback(interno));
 };
+getInternoUsuarioArea = function(idArea, callback) {
+    Interno.findAll({
+        where: { idArea: idArea },
+
+        include: [
+            { model: Usuarios, attributes: ['Nombre'] }
+        ],
+        attributes: ['idInterno']
+    }).then(intuseare => callback(intuseare));
+}
+
 
 getInternoUser = function(idUsuarios, callback) {
 
@@ -299,3 +311,6 @@ module.exports.deleteArea = deleteArea;
 module.exports.deleteRoll = deleteRoll;
 module.exports.deleteUsuario = deleteUsuario;
 module.exports.deleteInterno = deleteInterno;
+
+//get
+module.exports.getInternoUsuarioArea = getInternoUsuarioArea;
