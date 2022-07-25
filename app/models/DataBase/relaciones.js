@@ -29,8 +29,8 @@ module.exports = function() {
     Interno.hasMany(Citas, { foreignKey: 'idInterno' });
     Citas.belongsTo(Interno, { foreignKey: 'idInterno' });
 
-    Horario.hasMany(Citas, { foreignKey: ' idHorario' });
-    Citas.belongsTo(Horario, { foreignKey: ' idHorario' });
+    Horario.hasMany(Citas, { foreignKey: 'idHorario' });
+    Citas.belongsTo(Horario, { foreignKey: 'idHorario' });
 
 
 

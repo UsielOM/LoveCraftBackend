@@ -99,13 +99,21 @@ getCitas = function(idInterno, callback) {
         where: { idInterno: idInterno },
         include: [
             { model: Usuarios, attributes: ['idUsuarios', 'Nombre'] },
-            // { model: Horario, attributes: ['idHorario'] }
-            { model: Interno, attributes: ['Edad'] },
-            // { model: Horario, attributes: ['idHorario'] }
+
+            { model: Interno, attributes: ['idInterno'] },
+            { model: Horario, attributes: ['idHorario'] }
+
 
         ],
         attributes: ['Razon', 'Descripcion', 'Estatus', 'idHorario']
     }).then(citas => callback(citas));
+}
+
+getTableCitas = function(callback) {
+    Citas.findAll().then(cita => callback(cita));
+}
+getHorario = function(callback) {
+    Horario.findAll().then(horario => callback(horario));
 }
 
 getAreas = function(callback) {
@@ -323,3 +331,5 @@ module.exports.deleteInterno = deleteInterno;
 //get
 module.exports.getInternoUsuarioArea = getInternoUsuarioArea;
 module.exports.getCitas = getCitas;
+module.exports.getTableCitas = getTableCitas;
+module.exports.getHorario = getHorario;
