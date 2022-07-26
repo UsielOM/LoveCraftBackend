@@ -106,7 +106,7 @@ getCitas = function(idInterno, callback) {
             { model: Usuarios, attributes: ['idUsuarios', 'Nombre'] },
 
             { model: Interno, attributes: ['idInterno'] },
-            { model: Horario, attributes: ['idHorario'] }
+            { model: Horario, attributes: ['idHorario', 'Fecha', 'Hora_visita'] }
 
 
         ],
