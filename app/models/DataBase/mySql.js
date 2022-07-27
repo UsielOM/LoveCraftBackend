@@ -71,14 +71,14 @@ getInternos = function(callback) {
     }).then(interno => callback(interno));
 };
 //revisar
-getInternoUsuarioArea =function(idArea, callback){
+getInternoUsuarioArea = function(idArea, callback) {
     Interno.findAll({
-        where:{idArea:idArea},
+        where: { idArea: idArea },
         include: [
             { model: Usuarios, attributes: ['idUsuarios', 'Nombre'] },
 
         ],
-        attributes: ['idInterno','Nombre'],
+        attributes: ['idInterno'],
     }).then(interno => callback(interno));
 }
 

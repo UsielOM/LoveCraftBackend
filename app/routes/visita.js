@@ -1,10 +1,10 @@
 const { getInternosPorArea } = require("../controllers/visita");
 
-module.exports= function(app){  
+module.exports = function(app) {
 
     app.get('/getv', (request, response) => {
         response.send("Rutas para visita ");
     })
 
-    app.get('/get/interno',getInternosPorArea)
+    // app.get('/get/interno',getInternosPorArea)
 }
