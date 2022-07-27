@@ -138,10 +138,14 @@ getEstatus = function(callback) {
 }
 
 getHorario = function(request, callback) {
-        Horario.findAll({
-            where: { idInterno: request.idInterno, Fecha: request.Fecha },
-            attributes: ['Hora_visita']
-        }).then(citas => callback(citas));
+    Horario.findAll({
+        where: { idInterno: request.idInterno, Fecha: request.Fecha },
+        attributes: ['Hora_visita']
+    }).then(citas => callback(citas));
+}
+
+getHorarioIDEmpleadoIsac = function(idInterno, callback) {
+        Horario.findAll({ where: { idInterno: idInterno } }).then(horario => callback(horario));
     }
     //Metodos Post
 
@@ -168,28 +172,28 @@ postUsuarios = function(request, callback) {
 };
 
 postInternos = function(request, callback) {
-    const salt = bcrypt.genSaltSync();
-    pw2 = bcrypt.hashSync(request.Contraseña, salt);
+        const salt = bcrypt.genSaltSync();
+        pw2 = bcrypt.hashSync(request.Contraseña, salt);
 
-    Interno.create({
-        Foto: request.Foto,
-        Contraseña: pw2,
-        Fech_ingre: request.Fech_ingre,
-        Edad: request.Edad,
-        idEstatus: request.idEstatus,
-        idUsuarios: request.idUsuarios,
-        idArea: request.idArea,
-        idRoll: request.idRoll,
-        idHorario: request.idHorario
-    }).then(callback(true));
-}
-postHorario = function(request, callback) {
-    Horario.create({
-        Fecha: request.Fecha,
-        Hora_inicial: request.Hora_inicial,
-        Hora_final: request.Hora_final
-    }).then(callback(true));
-}
+        Interno.create({
+            Foto: request.Foto,
+            Contraseña: pw2,
+            Fech_ingre: request.Fech_ingre,
+            Edad: request.Edad,
+            idEstatus: request.idEstatus,
+            idUsuarios: request.idUsuarios,
+            idArea: request.idArea,
+            idRoll: request.idRoll,
+            idHorario: request.idHorario
+        }).then(callback(true));
+    }
+    // postHorario = function(request, callback) {
+    //     Horario.create({
+    //         Fecha: request.Fecha,
+    //         Hora_inicial: request.Hora_inicial,
+    //         Hora_final: request.Hora_final
+    //     }).then(callback(true));
+    // }
 
 postHorarioIsac = function(request, callback) {
     Horario.create({
@@ -333,7 +337,7 @@ module.exports.getInternos = getInternos;
 module.exports.getAreas = getAreas;
 module.exports.getRoll = getRoll;
 module.exports.getMaximoUsers = getMaximoUsers;
-module.exports.postHorario = postHorario;
+
 module.exports.postEmpleado = postEmpleado
 module.exports.getRolls = getRolls;
 module.exports.getEstatus = getEstatus;
@@ -353,6 +357,7 @@ module.exports.deleteInterno = deleteInterno;
 
 //get
 module.exports.getInternoUsuarioArea = getInternoUsuarioArea;
+module.exports.getHorarioIDEmpleadoIsac = getHorarioIDEmpleadoIsac;
 
 module.exports.getCitas = getCitas;
 module.exports.getTableCitas = getTableCitas;
