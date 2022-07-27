@@ -16,7 +16,7 @@ const Horario = sequelize.define('horario', {
     },
 
     Fecha: {
-        type: Sequelize.DataTypes.DATE
+        type: Sequelize.DataTypes.STRING
     },
     Hora_visita: {
         type: Sequelize.DataTypes.TIME
