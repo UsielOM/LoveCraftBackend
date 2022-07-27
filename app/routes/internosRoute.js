@@ -9,9 +9,7 @@ module.exports = function(app, mysql) {
     })
 
     //corregir
-    app.get('/get/internoA/:idArea'), (req, res) => {
-        mysql.getInternoUsuarioArea(req.params.idArea, result => res.send(result));
-    }
+
 
     app.post('/post/interno', (request, response) => {
         mysql.postEmpleado(request.body, function(result) {
