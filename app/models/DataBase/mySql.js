@@ -37,6 +37,9 @@ init = function() {
 getRoll = function(options, callback) {
     Roll.findOne({ where: { idRoll: options.idRoll } }).then(roll => callback(roll));
 };
+getInternoID = function(idUsuarios, callback) {
+    Interno.findOne({ where: { idUsuarios: idUsuarios } }).then(interno => callback(interno))
+}
 
 
 getRolls = function(callback) {
@@ -78,7 +81,13 @@ getInternoUsuarioArea =function(idArea, callback){
         attributes: ['idInterno'],
     }).then(interno => callback(interno));
 }
+
 //getInternoUsuarioArea
+
+getUserCorreo = function(Correo, callback) {
+    Usuarios.findOne({ where: { Correo: Correo } }).then(user => callback(user));
+}
+
 
 getInternoUser = function(idUsuarios, callback) {
 
@@ -100,13 +109,21 @@ getCitas = function(idInterno, callback) {
         where: { idInterno: idInterno },
         include: [
             { model: Usuarios, attributes: ['idUsuarios', 'Nombre'] },
-            // { model: Horario, attributes: ['idHorario'] }
-            { model: Interno, attributes: ['Edad'] },
-            // { model: Horario, attributes: ['idHorario'] }
+
+            { model: Interno, attributes: ['idInterno'] },
+            { model: Horario, attributes: ['idHorario', 'Fecha', 'Hora_visita'] }
+
 
         ],
         attributes: ['Razon', 'Descripcion', 'Estatus', 'idHorario']
     }).then(citas => callback(citas));
+}
+
+getTableCitas = function(callback) {
+    Citas.findAll().then(cita => callback(cita));
+}
+getHorario = function(callback) {
+    Horario.findAll().then(horario => callback(horario));
 }
 
 getAreas = function(callback) {
@@ -328,4 +345,12 @@ module.exports.deleteInterno = deleteInterno;
 
 //get
 module.exports.getInternoUsuarioArea = getInternoUsuarioArea;
+<<<<<<< HEAD
 //module.exports.getCitas = getCitas;
+=======
+module.exports.getCitas = getCitas;
+module.exports.getTableCitas = getTableCitas;
+module.exports.getHorario = getHorario;
+module.exports.getUserCorreo = getUserCorreo;
+module.exports.getInternoID = getInternoID;
+>>>>>>> eb2775c28ea75aa3b8b7cbbc0dfae78df000060d

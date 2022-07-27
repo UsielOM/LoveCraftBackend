@@ -26,14 +26,15 @@ const Citas = sequelize.define('citas', {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
     },
+
+    idUsuarios: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false
+    },
     idHorario: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
     },
-    idUsuarios: {
-        type: Sequelize.DataTypes.INTEGER,
-        allowNull: false
-    }
 
 
 }, {

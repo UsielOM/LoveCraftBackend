@@ -27,4 +27,10 @@ module.exports = function(app, mysql) {
         })
     })
 
+    app.get('/get/userco/:Correo', (req, res) => {
+        mysql.getUserCorreo(req.params.Correo, function(user) {
+            res.send(user);
+        })
+    })
+
 }

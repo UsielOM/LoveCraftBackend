@@ -9,7 +9,17 @@ module.exports = function(app, mysql) {
         mysql.getCitas(req.params.idInterno, result => res.send(result))
     })
 
+    app.get('/get/citas', (req, res) => {
+        mysql.getTableCitas(function(result) {
+            res.send(result)
+        })
+    })
 
+    app.get('/get/horarios', (req, res) => {
+        mysql.getHorario(function(result) {
+            res.send(result);
+        })
+    })
 
 
 
