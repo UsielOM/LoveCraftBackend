@@ -122,7 +122,7 @@ getCitas = function(idInterno, callback) {
 getTableCitas = function(callback) {
     Citas.findAll().then(cita => callback(cita));
 }
-getHorario = function(callback) {
+getHorarios = function(callback) {
     Horario.findAll().then(horario => callback(horario));
 }
 
@@ -134,15 +134,15 @@ getArea = function(idArea, callback) {
 }
 
 getEstatus = function(callback) {
-        Estatus.findAll().then(estatu => callback(estatu));
-    }
-
-getHorario = function(request ,callback){
-    Horario.findAll(
-        { where: { idInterno: request.idInterno , Fecha: request.Fecha },
-        attributes:['Hora_visita']
-}).then(citas => callback(citas));
+    Estatus.findAll().then(estatu => callback(estatu));
 }
+
+getHorario = function(request, callback) {
+        Horario.findAll({
+            where: { idInterno: request.idInterno, Fecha: request.Fecha },
+            attributes: ['Hora_visita']
+        }).then(citas => callback(citas));
+    }
     //Metodos Post
 
 postArea = function(request, callback) {
@@ -188,6 +188,14 @@ postHorario = function(request, callback) {
         Fecha: request.Fecha,
         Hora_inicial: request.Hora_inicial,
         Hora_final: request.Hora_final
+    }).then(callback(true));
+}
+
+postHorarioIsac = function(request, callback) {
+    Horario.create({
+        idInterno: request.idInterno,
+        Fecha: request.Fecha,
+        Hora_visita: request.Hora_visita
     }).then(callback(true));
 }
 
@@ -330,7 +338,7 @@ module.exports.postEmpleado = postEmpleado
 module.exports.getRolls = getRolls;
 module.exports.getEstatus = getEstatus;
 module.exports.getArea = getArea;
-module.exports.getHorario =getHorario;
+module.exports.getHorario = getHorario;
 //put
 module.exports.putArea = putArea;
 module.exports.putRoll = putRoll;
@@ -345,12 +353,13 @@ module.exports.deleteInterno = deleteInterno;
 
 //get
 module.exports.getInternoUsuarioArea = getInternoUsuarioArea;
-<<<<<<< HEAD
-//module.exports.getCitas = getCitas;
-=======
+
 module.exports.getCitas = getCitas;
 module.exports.getTableCitas = getTableCitas;
 module.exports.getHorario = getHorario;
+module.exports.getHorarios = getHorarios;
 module.exports.getUserCorreo = getUserCorreo;
 module.exports.getInternoID = getInternoID;
->>>>>>> eb2775c28ea75aa3b8b7cbbc0dfae78df000060d
+
+//post
+module.exports.postHorarioIsac = postHorarioIsac;

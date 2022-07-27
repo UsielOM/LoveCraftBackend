@@ -13,11 +13,16 @@ module.exports = function(app, mysql) {
             res.send(result);
         })
     })
-    app.post('/get/horario',(request, response) => {
-        mysql.getHorario(request.body,function(result){
+    app.post('/post/horario', (request, response) => {
+        mysql.getHorario(request.body, function(result) {
             response.send(result);
             console.log(request.body.Fecha)
         })
     });
+    app.get('/get/horarioss', (req, res) => {
+        mysql.getHorarios(function(result) {
+            res.send(result);
+        })
+    })
 
 }
