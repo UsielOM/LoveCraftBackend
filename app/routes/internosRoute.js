@@ -54,4 +54,9 @@ module.exports = function(app, mysql) {
         });
     });
 
+    app.get('/get/internoco/:idUsuarios', (req, res) => {
+        mysql.getInternoID(req.params.idUsuarios, function(interno) {
+            res.send(interno);
+        })
+    })
 }
