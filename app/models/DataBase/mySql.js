@@ -254,7 +254,15 @@ postHorarioOmar = function(request, callback) {
 }
 
 //Metodos PUT
-
+putHorario = function(req, callback) {
+    Horario.findOne({ where: { idHorario: req.idHorario } }).then(function(hora) {
+        hora.update({
+            Fecha: req.Fecha,
+            Hora_visita: req.Hora_visita
+        });
+        callback(hora)
+    })
+}
 putArea = function(req, callback) {
     Area.findOne({ where: { idArea: req.idArea } }).then(function(area) {
         area.update({
@@ -358,6 +366,7 @@ module.exports.putArea = putArea;
 module.exports.putRoll = putRoll;
 module.exports.putEmpleado = putEmpleado;
 module.exports.putUsuario = putUsuario;
+module.exports.putHorario = putHorario;
 
 //Delete
 module.exports.deleteArea = deleteArea;
