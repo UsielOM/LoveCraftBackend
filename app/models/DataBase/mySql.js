@@ -32,7 +32,9 @@ init = function() {
 
 //Metodos Get
 
-
+getHorarioFechaIsac = function(idInterno, Fecha, callback) {
+    Horario.findAll({ where: { Fecha: Fecha, idInterno: idInterno } }).then(hora => callback(hora));
+}
 
 getRoll = function(options, callback) {
     Roll.findOne({ where: { idRoll: options.idRoll } }).then(roll => callback(roll));
@@ -373,6 +375,7 @@ module.exports.getHorario = getHorario;
 module.exports.getHorarios = getHorarios;
 module.exports.getUserCorreo = getUserCorreo;
 module.exports.getInternoID = getInternoID;
+module.exports.getHorarioFechaIsac = getHorarioFechaIsac;
 
 //post
 module.exports.postHorarioIsac = postHorarioIsac;

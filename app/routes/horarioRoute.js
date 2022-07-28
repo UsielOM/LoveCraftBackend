@@ -28,6 +28,11 @@ module.exports = function(app, mysql) {
         mysql.getHorarioIDEmpleadoIsac(req.params.idInterno, result => res.send(result))
     })
 
+    app.get('/get/horarioHoy/:idInterno', (req, res) => {
+        const Fecha = req.body.Fecha
+        mysql.getHorarioFechaIsac(req.params.idInterno, Fecha, result => res.send(result));
+    })
+
     app.get('/get/iu/:idUsuarios', (req, res) => {
         mysql.getInternoUser(req.params.idUsuarios, result => res.send(result));
 
