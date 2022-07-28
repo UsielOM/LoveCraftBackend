@@ -38,4 +38,12 @@ module.exports = function(app, mysql) {
         })
     })
 
+    app.post('/post/horariomar', (request, response) => {
+        mysql.postHorarioOmar(request.body, function(result) {
+            response.send(result);
+            console.log(request.body.Fecha)
+        })
+    });
+
+
 }

@@ -226,24 +226,32 @@ postEmpleado = function(request, callback) {
     }).then(callback(true));
 }
 postCita = function(request, callback) {
-        Usuarios.create({
-            Nombre: request.Nombre,
-            Apellido: request.Apellido,
-            Telefono: request.Telefono,
-            Correo: request.Correo,
-            Direccion: request.Direccion
-        })
-        Citas.create({
-            Razon: request.Razon,
-            Descripcion: request.Descripcion,
-            Estatus: request.Estatus,
-            Documento: request.Documento,
-            idInterno: request.idInterno,
-            idHorario: request.idHorario,
-            idUsuarios: request.idUsuarios
-        }).then(callback(true));
-    }
-    //Metodos PUT
+    Usuarios.create({
+        Nombre: request.Nombre,
+        Apellido: request.Apellido,
+        Telefono: request.Telefono,
+        Correo: request.Correo,
+        Direccion: request.Direccion
+    })
+    Citas.create({
+        Razon: request.Razon,
+        Descripcion: request.Descripcion,
+        Estatus: request.Estatus,
+        Documento: request.Documento,
+        idInterno: request.idInterno,
+        idHorario: request.idHorario,
+        idUsuarios: request.idUsuarios
+    }).then(callback(true));
+}
+
+postHorarioOmar = function(request, callback) {
+    Horario.findAll({
+        where: { idInterno: request.idInterno, Fecha: request.Fecha },
+        attributes: ['Hora_visita', 'idHorario']
+    }).then(citas => callback(citas));
+}
+
+//Metodos PUT
 
 putArea = function(req, callback) {
     Area.findOne({ where: { idArea: req.idArea } }).then(function(area) {
@@ -368,3 +376,5 @@ module.exports.getInternoID = getInternoID;
 
 //post
 module.exports.postHorarioIsac = postHorarioIsac;
+module.exports.postCita = postCita;
+module.exports.postHorarioOmar = postHorarioOmar;
