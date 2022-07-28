@@ -27,10 +27,10 @@ module.exports = function(app, mysql) {
     app.get('/get/hoariointerno/:idInterno', (req, res) => {
         mysql.getHorarioIDEmpleadoIsac(req.params.idInterno, result => res.send(result))
     })
-
-    app.get('/get/horarioHoy/:idInterno', (req, res) => {
-        const Fecha = req.body.Fecha
-        mysql.getHorarioFechaIsac(req.params.idInterno, Fecha, result => res.send(result));
+    const Fecha = "";
+    app.get(`/get/horarioHoy/:idInterno?Fecha=${Fecha}`, (req, res) => {
+        Fehca = req.params.Fecha
+        mysql.getHorarioFechaIsac(req.params.idInterno, result => res.send(result));
     })
 
     app.get('/get/iu/:idUsuarios', (req, res) => {

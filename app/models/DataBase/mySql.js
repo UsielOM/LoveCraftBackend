@@ -249,7 +249,7 @@ postCita = function(request, callback) {
 postHorarioOmar = function(request, callback) {
     Horario.findAll({
         where: { idInterno: request.idInterno, Fecha: request.Fecha },
-        attributes: ['Hora_visita', 'idHorario']
+        attributes: ['Hora_visita', 'idHorario', 'Fecha']
     }).then(citas => callback(citas));
 }
 
