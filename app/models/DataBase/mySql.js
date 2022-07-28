@@ -60,6 +60,7 @@ getMaximoUsers = function(callback) {
 };
 
 
+
 getInternos = function(callback) {
     Interno.findAll({
         include: [
@@ -106,6 +107,18 @@ getInternoUser = function(idUsuarios, callback) {
     }).then(inte => callback(inte));
 }
 
+getCitasId = function(idCitas, callback) {
+    Citas.findOne({
+        where: { idCitas: idCitas },
+        include: [
+            { model: Interno, attributes: ['idInterno', 'idArea', 'idUsuarios'] },
+            { model: Usuarios, attributes: ['Nombre', 'Apellido', 'Telefono', 'Correo'] },
+            { model: Horario, attributes: ['idHorario', 'Fecha', 'Hora_visita'] }
+
+        ]
+
+    }).then(cita => callback(cita));
+}
 getCitas = function(idInterno, callback) {
     Citas.findAll({
         where: { idInterno: idInterno },
@@ -174,28 +187,21 @@ postUsuarios = function(request, callback) {
 };
 
 postInternos = function(request, callback) {
-        const salt = bcrypt.genSaltSync();
-        pw2 = bcrypt.hashSync(request.Contraseña, salt);
+    const salt = bcrypt.genSaltSync();
+    pw2 = bcrypt.hashSync(request.Contraseña, salt);
 
-        Interno.create({
-            Foto: request.Foto,
-            Contraseña: pw2,
-            Fech_ingre: request.Fech_ingre,
-            Edad: request.Edad,
-            idEstatus: request.idEstatus,
-            idUsuarios: request.idUsuarios,
-            idArea: request.idArea,
-            idRoll: request.idRoll,
-            idHorario: request.idHorario
-        }).then(callback(true));
-    }
-    // postHorario = function(request, callback) {
-    //     Horario.create({
-    //         Fecha: request.Fecha,
-    //         Hora_inicial: request.Hora_inicial,
-    //         Hora_final: request.Hora_final
-    //     }).then(callback(true));
-    // }
+    Interno.create({
+        Foto: request.Foto,
+        Contraseña: pw2,
+        Fech_ingre: request.Fech_ingre,
+        Edad: request.Edad,
+        idEstatus: request.idEstatus,
+        idUsuarios: request.idUsuarios,
+        idArea: request.idArea,
+        idRoll: request.idRoll,
+        idHorario: request.idHorario
+    }).then(callback(true));
+}
 
 postHorarioIsac = function(request, callback) {
     Horario.create({
@@ -396,6 +402,7 @@ module.exports.getHorarios = getHorarios;
 module.exports.getUserCorreo = getUserCorreo;
 module.exports.getInternoID = getInternoID;
 module.exports.getHorarioFechaIsac = getHorarioFechaIsac;
+module.exports.getCitasId = getCitasId;
 
 //post
 module.exports.postHorarioIsac = postHorarioIsac;

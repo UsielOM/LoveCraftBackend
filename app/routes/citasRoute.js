@@ -21,6 +21,10 @@ module.exports = function(app, mysql) {
         })
     })
 
+    app.get('/get/cita/:idCitas', (req, res) => {
+        mysql.getCitasId(req.params.idCitas, result => res.send(result));
+    })
+
 
 
 }
