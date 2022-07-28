@@ -345,6 +345,16 @@ deleteRoll = function(idRoll, callback) {
     });
 }
 
+deleteHorario = function(idHorario, callback) {
+    Horario.findOne({ where: { idHorario: idHorario } }).then(function(hora) {
+        if (hora != null) {
+            hora.destroy().then(result => callback(result));
+        } else {
+            callback(null)
+        }
+    });
+}
+
 module.exports.init = init;
 module.exports.postRoll = postRoll;
 module.exports.postArea = postArea;
@@ -373,6 +383,7 @@ module.exports.deleteArea = deleteArea;
 module.exports.deleteRoll = deleteRoll;
 module.exports.deleteUsuario = deleteUsuario;
 module.exports.deleteInterno = deleteInterno;
+module.exports.deleteHorario = deleteHorario;
 
 //get
 module.exports.getInternoUsuarioArea = getInternoUsuarioArea;

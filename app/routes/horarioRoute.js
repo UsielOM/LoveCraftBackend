@@ -42,5 +42,14 @@ module.exports = function(app, mysql) {
         })
     })
 
+    app.delete('/delete/hora/:idHorario', (req, res) => {
+        mysql.deleteHorario(req.params.idHorario, result => {
+            if (result != null) {
+                res.send(result);
+            } else {
+                res.status(400).send({ message: "La hora no pudo ser eliminada  " });
+            }
+        })
+    })
 
 }
