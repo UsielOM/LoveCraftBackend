@@ -25,6 +25,9 @@ module.exports = function(app, mysql) {
         mysql.getCitasId(req.params.idCitas, result => res.send(result));
     })
 
+    app.get('/get/citauserid/:idUsuarios', (req, res) => {
+        mysql.getCitaIdUser(req.params.idUsuarios, result => res.send(result));
+    })
 
 
 }

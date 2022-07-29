@@ -47,17 +47,8 @@ getInternoID = function(idUsuarios, callback) {
 getRolls = function(callback) {
     Roll.findAll().then(rolls => callback(rolls));
 }
-getMaximoUsers = function(callback) {
-
-    Usuarios.findAll({
-        attributes: [
-            [sequelize.fn('MAX', sequelize.col('idUsuarios')), 'idUsuarios']
-        ],
-        raw: true
-    }).then(result => callback(result));
 
 
-};
 
 
 
@@ -89,6 +80,23 @@ getInternoUsuarioArea = function(idArea, callback) {
 
 getUserCorreo = function(Correo, callback) {
     Usuarios.findOne({ where: { Correo: Correo } }).then(user => callback(user));
+}
+
+getMaximoUsers = function(Correo, callback) {
+
+    Usuarios.findOne({
+        where: { Correo: Correo },
+        attributes: [
+            [sequelize.fn('MAX', sequelize.col('idUsuarios')), 'idUsuarios']
+        ],
+        raw: true
+    }).then(result => callback(result));
+
+
+};
+
+getCitaIdUser = function(idUsuarios, callback) {
+    Citas.findOne({ where: { idUsuarios: idUsuarios } }).then(cita => callback(cita));
 }
 
 
@@ -403,6 +411,7 @@ module.exports.getUserCorreo = getUserCorreo;
 module.exports.getInternoID = getInternoID;
 module.exports.getHorarioFechaIsac = getHorarioFechaIsac;
 module.exports.getCitasId = getCitasId;
+module.exports.getCitaIdUser = getCitaIdUser;
 
 //post
 module.exports.postHorarioIsac = postHorarioIsac;
