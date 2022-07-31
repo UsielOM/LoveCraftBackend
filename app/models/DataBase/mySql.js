@@ -155,7 +155,7 @@ getAreas = function(callback) {
 getArea = function(idArea, callback) {
     Area.findOne({ where: { idArea: idArea } }).then(area => callback(area));
 }
-conexion
+
 getEstatus = function(callback) {
     Estatus.findAll().then(estatu => callback(estatu));
 }
