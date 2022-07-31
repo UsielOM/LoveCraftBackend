@@ -1,6 +1,6 @@
 module.exports = function(app, mysql) {
 
-
+    
     app.post('/post/horario', (req, res) => {
         mysql.postHorarioIsac(req.body, function(result) {
             res.send(result);
