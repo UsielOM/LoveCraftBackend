@@ -319,6 +319,15 @@ putRoll = function(request, callback) {
         })
     }
     //Metods Delete
+deletCita = function(idCitas, callback) {
+    Citas.findOne({ where: { idCitas: idCitas } }).then(function(cita) {
+        if (cita != null) {
+            cita.destroy().then(result => callback(result));
+        } else {
+            callback(null);
+        }
+    })
+}
 deleteArea = function(idArea, callback) {
     Area.findOne({ where: { idArea: idArea } }).then(function(article) {
         if (article != null) {
@@ -398,7 +407,7 @@ module.exports.deleteRoll = deleteRoll;
 module.exports.deleteUsuario = deleteUsuario;
 module.exports.deleteInterno = deleteInterno;
 module.exports.deleteHorario = deleteHorario;
-
+module.exports.deletCita = deletCita;
 //get
 module.exports.getInternoUsuarioArea = getInternoUsuarioArea;
 module.exports.getHorarioIDEmpleadoIsac = getHorarioIDEmpleadoIsac;
