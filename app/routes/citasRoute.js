@@ -25,6 +25,15 @@ module.exports = function(app, mysql) {
         mysql.getCitasId(req.params.idCitas, result => res.send(result));
     })
 
+    app.delete('/delete/cita/:idCitas', (req, res) => {
+        mysql.deletCita(req.params.idCitas, result => {
+            if (result != null) {
+                res.send(result);
+            } else {
+                res.status(400).send({ message: "La cita no se pudo borrar" });
+            }
+        })
+    })
     app.get('/get/citauserid/:idUsuarios', (req, res) => {
         mysql.getCitaIdUser(req.params.idUsuarios, result => res.send(result));
     })
